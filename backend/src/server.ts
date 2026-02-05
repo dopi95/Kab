@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get('/', (req, res) => {
-  res.json({ message: 'Kabb Creative Lab API is running!' });
+  res.json({ message: 'Kab Creative Lab API is running!' });
 });
 
 app.use('/api/users', userRoutes);

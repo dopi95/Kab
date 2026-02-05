@@ -1,7 +1,7 @@
 {
-  "name": "kabb-creative-lab-backend",
+  "name": "kab-creative-lab-backend",
   "version": "1.0.0",
-  "description": "Backend API for Kabb Creative Lab",
+  "description": "Backend API for Kab Creative Lab",
   "main": "dist/server.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
