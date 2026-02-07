@@ -8,6 +8,13 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const saved = localStorage.getItem('darkMode') === 'true';
+    setIsDarkMode(saved);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -16,18 +23,11 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    const saved = localStorage.getItem('darkMode');
-    if (saved) {
-      const isDark = saved === 'true';
-      setIsDarkMode(isDark);
-      document.documentElement.classList.toggle('dark', isDark);
+    if (mounted) {
+      document.documentElement.classList.toggle('dark', isDarkMode);
+      localStorage.setItem('darkMode', String(isDarkMode));
     }
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDarkMode);
-    localStorage.setItem('darkMode', String(isDarkMode));
-  }, [isDarkMode]);
+  }, [isDarkMode, mounted]);
 
   const navLinks = [
     { name: 'Home', href: '#home' },
