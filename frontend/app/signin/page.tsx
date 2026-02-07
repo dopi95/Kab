@@ -118,6 +118,9 @@ export default function SignIn() {
           </form>
 
           <div className="mt-6 text-center">
+            <a href="/forgot-password" className="text-sm text-[#A97E50] dark:text-[#C4A86D] hover:underline mb-4 block">
+              Forgot Password?
+            </a>
             <a href="/" className="text-[#A97E50] dark:text-[#C4A86D] hover:underline">
               Back to Home
             </a>

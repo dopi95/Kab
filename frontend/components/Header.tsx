@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 export default function Header() {
   const pathname = usePathname();
   
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/user')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/user') || pathname?.startsWith('/forgot-password')) {
     return null;
   }
   const [isScrolled, setIsScrolled] = useState(false);
