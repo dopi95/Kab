@@ -22,7 +22,7 @@ export default function UserSidebar({ user }: SidebarProps) {
   const menuItems = [
     { icon: FaChartLine, label: 'Dashboard', path: '/user' },
     { icon: FaUser, label: 'My Profile', path: '/user/profile' },
-    { icon: FaFolderOpen, label: 'My Assets', path: '/user/projects' },
+    { icon: FaFolderOpen, label: 'My Assets', path: '/user/my-assets' },
   ];
 
   return (

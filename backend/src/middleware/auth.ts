@@ -11,7 +11,7 @@ interface AuthRequest extends Request {
   };
 }
 
-export const auth = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const auth = (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     
@@ -33,7 +33,7 @@ export const admin = (req: AuthRequest, res: Response, next: NextFunction) => {
   if (req.user?.role === 'admin') {
     next();
   } else {
-    res.status(403).json({ message: 'Admin access required' });
+    res.status(403).json({ message: 'Admin access required', user: req.user });
   }
 };
 

@@ -73,7 +73,7 @@ export default function AdminSidebar({ user }: SidebarProps) {
     { icon: FaQuestionCircle, label: 'FAQs', path: '/admin/faqs' },
     { icon: FaUsers, label: 'Users', path: '/admin/users' },
     { icon: FaFolderOpen, label: 'Projects', path: '/admin/projects' },
-    { icon: FaCog, label: 'Settings', path: '/admin/settings' },
+    { icon: FaFileInvoice, label: 'Send Data', path: '/admin/send-data' },
   ];
 
   return (
