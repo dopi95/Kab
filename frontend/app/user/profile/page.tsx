@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import AdminLayout from '@/components/AdminLayout';
+import UserLayout from '@/components/UserLayout';
 
-export default function ProfilePage() {
+export default function UserProfilePage() {
   const [user, setUser] = useState({ name: '', email: '' });
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState({ type: '', text: '' });
@@ -97,16 +97,16 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <AdminLayout>
+      <UserLayout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="w-16 h-16 border-4 border-[#A97E50] border-t-transparent rounded-full animate-spin"></div>
         </div>
-      </AdminLayout>
+      </UserLayout>
     );
   }
 
   return (
-    <AdminLayout>
+    <UserLayout>
       <div className="p-4 sm:p-6 lg:p-8 pt-16 lg:pt-8">
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">My Profile</h1>
@@ -197,6 +197,6 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-    </AdminLayout>
+    </UserLayout>
   );
 }

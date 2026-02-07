@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import AdminSidebar from '@/components/AdminSidebar';
+import UserSidebar from '@/components/UserSidebar';
 
-interface AdminLayoutProps {
+interface UserLayoutProps {
   children: React.ReactNode;
 }
 
-export default function AdminLayout({ children }: AdminLayoutProps) {
+export default function UserLayout({ children }: UserLayoutProps) {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -28,6 +28,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       .then(res => res.json())
       .then(data => {
         if (data.user) {
+          if (data.user.role !== 'user') {
+            router.push('/admin');
+            return;
+          }
           setUser(data.user);
         } else {
           localStorage.removeItem('token');
@@ -54,7 +58,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#171817]">
-      <AdminSidebar user={user} />
+      <UserSidebar user={user} />
       <main className="lg:ml-64 min-h-screen">
         {children}
       </main>
