@@ -36,12 +36,26 @@ export default function Header() {
   }, [isDarkMode, mounted]);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
+    { name: 'Home', href: '#hero' },
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Portfolio', href: '#portfolio' },
     { name: 'Contact', href: '#contact' },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (href === '#hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
+    } else if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setIsMobileMenuOpen(false);
+      }
+    }
+  };
 
   return (
     <header
@@ -77,6 +91,7 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="relative text-gray-700 dark:text-gray-300 hover:text-[#A97E50] dark:hover:text-[#C4A86D] font-medium transition-colors duration-300 group"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
@@ -129,7 +144,10 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => {
+                  handleNavClick(e, link.href);
+                  setIsMobileMenuOpen(false);
+                }}
                 className="block px-4 py-3 mb-2 text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-[#A97E50] dark:hover:text-[#C4A86D] hover:translate-x-2 transition-all duration-300 animate-bounceIn"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
