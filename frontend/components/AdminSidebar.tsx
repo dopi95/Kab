@@ -27,9 +27,14 @@ export default function AdminSidebar({ user }: SidebarProps) {
     const fetchUnreadCount = async () => {
       try {
         const token = localStorage.getItem('token');
+        if (!token) return;
+        
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact/unread-count`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        
+        if (!response.ok) return;
+        
         const data = await response.json();
         if (data.success) {
           const newCount = data.count;
@@ -45,7 +50,7 @@ export default function AdminSidebar({ user }: SidebarProps) {
           setUnreadCount(newCount);
         }
       } catch (error) {
-        console.error('Failed to fetch unread count:', error);
+        // Silently fail
       }
     };
 
@@ -68,7 +73,6 @@ export default function AdminSidebar({ user }: SidebarProps) {
     { icon: FaQuestionCircle, label: 'FAQs', path: '/admin/faqs' },
     { icon: FaUsers, label: 'Users', path: '/admin/users' },
     { icon: FaFolderOpen, label: 'Projects', path: '/admin/projects' },
-    { icon: FaFileInvoice, label: 'Messages', path: '/admin/messages' },
     { icon: FaCog, label: 'Settings', path: '/admin/settings' },
   ];
 

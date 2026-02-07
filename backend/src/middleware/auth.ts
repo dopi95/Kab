@@ -30,9 +30,11 @@ export const auth = async (req: AuthRequest, res: Response, next: NextFunction) 
 export const protect = auth;
 
 export const admin = (req: AuthRequest, res: Response, next: NextFunction) => {
-  if (req.user && req.user.role === 'admin') {
+  if (req.user?.role === 'admin') {
     next();
   } else {
     res.status(403).json({ message: 'Admin access required' });
   }
 };
+
+export const adminOnly = [auth, admin];

@@ -22,10 +22,51 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const user = await User.create(req.body);
-    res.status(201).json({ success: true, data: user });
+    const { name } = req.body;
+    
+    if (!name) {
+      return res.status(400).json({ success: false, message: 'Name is required' });
+    }
+
+    // Generate email from name (remove spaces, lowercase)
+    const cleanName = name.toLowerCase().replace(/\s+/g, '');
+    const email = `${cleanName}@kab.com`;
+    
+    // Check if email exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ success: false, message: 'User with this name already exists' });
+    }
+    
+    // Generate random password
+    const password = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8).toUpperCase();
+    
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    
+    // Create user
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      plainPassword: password,
+      role: 'user'
+    });
+
+    res.status(201).json({ 
+      success: true, 
+      data: {
+        id: user._id,
+        name: user.name,
+        username: cleanName,
+        password,
+        email: user.email,
+        role: user.role
+      }
+    });
   } catch (error) {
-    res.status(400).json({ success: false, message: 'Invalid data' });
+    res.status(400).json({ success: false, message: 'Failed to create user' });
   }
 };
 
@@ -138,6 +179,21 @@ export const uploadProfileImage = async (req: AuthRequest, res: Response) => {
   } catch (error: any) {
     console.error('Upload error:', error);
     res.status(500).json({ success: false, message: error.message || 'Error uploading image' });
+  }
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
+    
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.json({ success: true, message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server Error' });
   }
 };
 
