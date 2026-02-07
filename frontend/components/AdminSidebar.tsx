@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
+import { FaChartLine, FaUser, FaFileAlt, FaCog, FaUsers, FaFolderOpen, FaEnvelope, FaFileInvoice, FaSignOutAlt, FaGlobe } from 'react-icons/fa';
 
 interface SidebarProps {
   user: any;
@@ -19,15 +20,15 @@ export default function AdminSidebar({ user }: SidebarProps) {
   };
 
   const menuItems = [
-    { icon: '📊', label: 'Dashboard', path: '/admin' },
-    { icon: '👤', label: 'My Profile', path: '/admin/profile' },
-    { icon: '📝', label: 'About', path: '/admin/about' },
-    { icon: '🛠️', label: 'Services', path: '/admin/services' },
-    { icon: '👥', label: 'Users', path: '/admin/users' },
-    { icon: '📁', label: 'Projects', path: '/admin/projects' },
-    { icon: '💬', label: 'Messages', path: '/admin/messages' },
-    { icon: '📄', label: 'Content', path: '/admin/content' },
-    { icon: '⚙️', label: 'Settings', path: '/admin/settings' },
+    { icon: FaChartLine, label: 'Dashboard', path: '/admin' },
+    { icon: FaUser, label: 'My Profile', path: '/admin/profile' },
+    { icon: FaFileAlt, label: 'About', path: '/admin/about' },
+    { icon: FaCog, label: 'Services', path: '/admin/services' },
+    { icon: FaUsers, label: 'Users', path: '/admin/users' },
+    { icon: FaFolderOpen, label: 'Projects', path: '/admin/projects' },
+    { icon: FaEnvelope, label: 'Messages', path: '/admin/messages' },
+    { icon: FaFileInvoice, label: 'Content', path: '/admin/content' },
+    { icon: FaCog, label: 'Settings', path: '/admin/settings' },
   ];
 
   return (
@@ -58,70 +59,84 @@ export default function AdminSidebar({ user }: SidebarProps) {
       <aside
         className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 shadow-xl z-40 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0`}
+        } lg:translate-x-0 flex flex-col`}
       >
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="p-6 border-b border-gray-200 dark:border-gray-800 pt-16 lg:pt-6">
-            <div className="flex items-center space-x-3">
-              <div className="relative w-12 h-12">
-                <Image src="/assets/logo.png" alt="Logo" fill className="object-contain" />
-              </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent">
-                Admin Panel
-              </h1>
+        {/* Logo */}
+        <div className="p-4 border-b border-gray-200 dark:border-gray-800 pt-16 lg:pt-4">
+          <div className="flex items-center space-x-2">
+            <div className="relative w-8 h-8">
+              <Image src="/assets/logo.png" alt="Logo" fill className="object-contain" />
             </div>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent">
+              Admin Panel
+            </h1>
           </div>
+        </div>
 
-          {/* User Info */}
-          <div className="p-4 border-b border-gray-200 dark:border-gray-800">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#A97E50] to-[#C4A86D] flex items-center justify-center text-white font-semibold">
+        {/* User Info */}
+        <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-800">
+          <div className="flex items-center space-x-2">
+            {user?.profileImage ? (
+              <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                <Image src={user.profileImage} alt="Profile" fill className="object-cover" />
+              </div>
+            ) : (
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#A97E50] to-[#C4A86D] flex items-center justify-center text-white text-lg font-semibold flex-shrink-0">
                 {user?.name?.[0]?.toUpperCase()}
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                  {user?.name}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Administrator</p>
-              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <p className="text-lg font-semibold text-gray-900 dark:text-white truncate">
+                {user?.name}
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Administrator</p>
             </div>
           </div>
+        </div>
 
-          {/* Navigation */}
-          <nav className="flex-1 overflow-y-auto p-4">
-            <ul className="space-y-2">
-              {menuItems.map((item) => (
+        {/* Navigation */}
+        <nav className="flex-1 px-3 py-2">
+          <ul className="space-y-1">
+            {menuItems.map((item) => {
+              const IconComponent = item.icon;
+              return (
                 <li key={item.path}>
                   <button
                     onClick={() => {
                       router.push(item.path);
                       setIsOpen(false);
                     }}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                    className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                       pathname === item.path
                         ? 'bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white shadow-lg'
                         : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                   >
-                    <span className="text-xl">{item.icon}</span>
-                    <span className="font-medium">{item.label}</span>
+                    <IconComponent className="text-sm" />
+                    <span className="text-sm font-medium">{item.label}</span>
                   </button>
                 </li>
-              ))}
-            </ul>
-          </nav>
+              );
+            })}
+          </ul>
+        </nav>
 
-          {/* Logout Button */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-800">
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200"
-            >
-              <span className="text-xl">🚪</span>
-              <span className="font-medium">Logout</span>
-            </button>
-          </div>
+        {/* Logout Button */}
+        <div className="px-3 py-2 border-t border-gray-200 dark:border-gray-800 space-y-1">
+          <a
+            href="/"
+            className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
+          >
+            <FaGlobe className="text-sm" />
+            <span className="text-sm font-medium">Back to Website</span>
+          </a>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200"
+          >
+            <FaSignOutAlt className="text-sm" />
+            <span className="text-sm font-medium">Logout</span>
+          </button>
         </div>
       </aside>
     </>

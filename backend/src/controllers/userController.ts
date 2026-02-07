@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
 import bcrypt from 'bcryptjs';
+import cloudinary from '../config/cloudinary';
 
 interface AuthRequest extends Request {
   user?: {
@@ -91,5 +92,79 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
     res.json({ success: true, message: 'Password changed successfully' });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server Error' });
+  }
+};
+
+export const uploadProfileImage = async (req: AuthRequest, res: Response) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No image provided' });
+    }
+
+    const user = await User.findById(req.user!.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Delete old image if exists
+    if (user.profileImage) {
+      try {
+        const urlParts = user.profileImage.split('/');
+        const publicIdWithExt = urlParts[urlParts.length - 1];
+        const publicId = `profile_images/${publicIdWithExt.split('.')[0]}`;
+        await cloudinary.uploader.destroy(publicId);
+      } catch (err) {
+        console.log('Error deleting old image:', err);
+      }
+    }
+
+    // Upload new image
+    const b64 = Buffer.from(req.file.buffer).toString('base64');
+    const dataURI = `data:${req.file.mimetype};base64,${b64}`;
+    
+    const result = await cloudinary.uploader.upload(dataURI, {
+      folder: 'profile_images',
+      resource_type: 'auto',
+      transformation: [
+        { width: 500, height: 500, crop: 'fill', gravity: 'face' },
+        { quality: 'auto' }
+      ]
+    });
+
+    user.profileImage = result.secure_url;
+    await user.save();
+
+    res.json({ success: true, profileImage: user.profileImage });
+  } catch (error: any) {
+    console.error('Upload error:', error);
+    res.status(500).json({ success: false, message: error.message || 'Error uploading image' });
+  }
+};
+
+export const removeProfileImage = async (req: AuthRequest, res: Response) => {
+  try {
+    const user = await User.findById(req.user!.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (user.profileImage) {
+      try {
+        const urlParts = user.profileImage.split('/');
+        const publicIdWithExt = urlParts[urlParts.length - 1];
+        const publicId = `profile_images/${publicIdWithExt.split('.')[0]}`;
+        await cloudinary.uploader.destroy(publicId);
+      } catch (err) {
+        console.log('Error deleting image from cloudinary:', err);
+      }
+    }
+
+    user.profileImage = '';
+    await user.save();
+
+    res.json({ success: true, message: 'Profile image removed' });
+  } catch (error) {
+    console.error('Remove error:', error);
+    res.status(500).json({ success: false, message: 'Error removing image' });
   }
 };

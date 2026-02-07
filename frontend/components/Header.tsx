@@ -15,11 +15,27 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     setMounted(true);
     const saved = localStorage.getItem('darkMode') === 'true';
     setIsDarkMode(saved);
+    
+    // Check if user is logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.user) {
+            setUser(data.user);
+          }
+        })
+        .catch(() => {});
+    }
   }, []);
 
   useEffect(() => {
@@ -103,16 +119,28 @@ export default function Header() {
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-4">
-            {/* Sign In - Desktop & Mobile */}
-            <Link
-              href="/signin"
-              className="flex items-center space-x-2 text-[#A97E50] dark:text-[#C4A86D] hover:scale-110 transition-all duration-300 group"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <span className="font-medium">Sign In</span>
-            </Link>
+            {/* Sign In / My Account - Desktop & Mobile */}
+            {user ? (
+              <Link
+                href={user.role === 'admin' ? '/admin' : '/user'}
+                className="flex items-center space-x-2 text-[#A97E50] dark:text-[#C4A86D] hover:scale-110 transition-all duration-300 group"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span className="font-medium">My Account</span>
+              </Link>
+            ) : (
+              <Link
+                href="/signin"
+                className="flex items-center space-x-2 text-[#A97E50] dark:text-[#C4A86D] hover:scale-110 transition-all duration-300 group"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span className="font-medium">Sign In</span>
+              </Link>
+            )}
 
             {/* Dark Mode Toggle - Desktop only */}
             <button
