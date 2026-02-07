@@ -43,10 +43,10 @@ export default function AnimatedHero() {
               Where imagination comes alive! ✨
             </p>
             <div className="flex flex-row gap-2 sm:gap-4 justify-center md:justify-start mt-[60px] sm:mt-0">
-              <a href="#services" className="bg-gradient-to-r from-[#A97E50] to-[#C4A86D] hover:shadow-2xl text-white font-bold py-2 px-5 sm:py-3 sm:px-8 md:py-4 md:px-10 rounded-full text-xs sm:text-lg md:text-xl transform hover:scale-110 transition-all duration-300">
+              <a href="#services" className="bg-gradient-to-r from-[#A97E50] to-[#C4A86D] hover:shadow-2xl text-white font-bold py-3.5 px-7 sm:py-3 sm:px-8 md:py-4 md:px-10 rounded-full text-base sm:text-lg md:text-xl transform hover:scale-110 transition-all duration-300">
                 Services ✨
               </a>
-              <a href="#contact" className="bg-white dark:bg-gray-800 border-2 border-[#A97E50] text-[#A97E50] dark:text-[#C4A86D] hover:bg-[#A97E50] hover:text-white dark:hover:bg-[#A97E50] font-bold py-2 px-5 sm:py-3 sm:px-8 md:py-4 md:px-10 rounded-full text-xs sm:text-lg md:text-xl transform hover:scale-110 transition-all duration-300">
+              <a href="#contact" className="bg-white dark:bg-gray-800 border-2 border-[#A97E50] text-[#A97E50] dark:text-[#C4A86D] hover:bg-[#A97E50] hover:text-white dark:hover:bg-[#A97E50] font-bold py-3.5 px-7 sm:py-3 sm:px-8 md:py-4 md:px-10 rounded-full text-base sm:text-lg md:text-xl transform hover:scale-110 transition-all duration-300">
                 Contact 💬
               </a>
             </div>
