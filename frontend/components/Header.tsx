@@ -3,8 +3,14 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
+  const pathname = usePathname();
+  
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);

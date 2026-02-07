@@ -6,6 +6,9 @@ import Script from 'next/script'
 export const metadata: Metadata = {
   title: 'Kab Creative Lab',
   description: 'Creative solutions and innovative designs',
+  icons: {
+    icon: '/assets/logo.png',
+  },
 }
 
 export default function RootLayout({
