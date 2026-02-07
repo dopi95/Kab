@@ -1,22 +1,44 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { FaVideo, FaPalette, FaRobot, FaCamera, FaBullhorn, FaCode } from 'react-icons/fa';
+import { FaVideo, FaPalette, FaRobot, FaCamera, FaBullhorn, FaCode, FaCog, FaLaptopCode, FaMobileAlt, FaChartLine } from 'react-icons/fa';
+
+interface Service {
+  _id: string;
+  title: string;
+  description: string;
+  icon: string;
+  isActive: boolean;
+  order: number;
+}
+
+const getIconComponent = (iconName: string) => {
+  const icons: any = {
+    FaVideo, FaPalette, FaRobot, FaCamera, FaBullhorn, FaCode, FaCog, FaLaptopCode, FaMobileAlt, FaChartLine
+  };
+  return icons[iconName] || FaCog;
+};
 
 export default function ServicesSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeService, setActiveService] = useState(0);
   const [animationComplete, setAnimationComplete] = useState(false);
+  const [services, setServices] = useState<Service[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const services = [
-    { icon: FaVideo, title: 'Video Production', desc: 'Professional video content that captures attention and drives engagement' },
-    { icon: FaPalette, title: 'Visual Branding', desc: 'Distinctive brand identities that stand out in the market' },
-    { icon: FaRobot, title: 'AI Content', desc: 'Smart content solutions powered by cutting-edge AI technology' },
-    { icon: FaCamera, title: 'Photography', desc: 'Stunning visuals that tell your brand story perfectly' },
-    { icon: FaBullhorn, title: 'Marketing', desc: 'Strategic campaigns that convert attention into results' },
-    { icon: FaCode, title: 'Web Design', desc: 'Modern, responsive websites that deliver exceptional experiences' },
-  ];
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services`);
+      const data = await response.json();
+      setServices(data);
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,10 +86,10 @@ export default function ServicesSection() {
           <div className="w-24 h-1 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] mx-auto rounded-full"></div>
         </div>
 
-        {/* Mobile Layout - Character moves down with services */}
+        {/* Mobile Layout */}
         <div className="lg:hidden">
           <div className="relative">
-            {/* Character - Mobile - Moves down then up */}
+            {/* Character - Mobile */}
             <div className="absolute left-4 z-10" style={{
               top: animationComplete ? '0px' : `${activeService * 100}px`,
               transition: animationComplete ? 'top 1.5s ease-in-out' : 'top 0.6s ease-out'
@@ -132,11 +154,11 @@ export default function ServicesSection() {
               minHeight: `${services.length * 110 + 200}px`
             }}>
               {services.map((service, index) => {
-                const Icon = service.icon;
+                const Icon = getIconComponent(service.icon);
                 const isActive = index <= activeService && isVisible;
                 return (
                   <div
-                    key={index}
+                    key={service._id}
                     className={`bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg border-2 transition-all duration-700 transform ${
                       isActive
                         ? 'opacity-100 translate-x-0 scale-100 border-[#A97E50]'
@@ -152,7 +174,7 @@ export default function ServicesSection() {
                       </div>
                       <div className="flex-1">
                         <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-1">{service.title}</h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">{service.desc}</p>
+                        <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">{service.description}</p>
                       </div>
                     </div>
                   </div>
@@ -232,11 +254,11 @@ export default function ServicesSection() {
             {/* Services Grid - Center - Desktop */}
             <div className="flex-1 max-w-3xl grid grid-cols-1 gap-6">
               {services.map((service, index) => {
-                const Icon = service.icon;
+                const Icon = getIconComponent(service.icon);
                 const isActive = index <= activeService && isVisible;
                 return (
                   <div
-                    key={index}
+                    key={service._id}
                     className={`bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border-2 transition-all duration-700 transform min-h-[140px] ${
                       isActive
                         ? 'opacity-100 translate-x-0 scale-100 border-[#A97E50]'
@@ -252,7 +274,7 @@ export default function ServicesSection() {
                       </div>
                       <div className="flex-1">
                         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">{service.title}</h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">{service.desc}</p>
+                        <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">{service.description}</p>
                       </div>
                     </div>
                   </div>

@@ -9,7 +9,8 @@
     "start": "node dist/server.js",
     "clean": "rimraf dist",
     "seed:admin": "ts-node src/scripts/seedAdmin.ts",
-    "seed:user": "ts-node src/scripts/seedUser.ts"
+    "seed:user": "ts-node src/scripts/seedUser.ts",
+    "seed:services": "ts-node src/scripts/seedServices.ts"
   },
   "dependencies": {
     "@sendinblue/client": "^3.3.1",

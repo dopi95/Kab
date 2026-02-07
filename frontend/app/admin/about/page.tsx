@@ -52,10 +52,11 @@ export default function AdminAboutPage() {
 
   return (
     <AdminLayout>
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-          Manage About Section
-        </h1>
+      <div className="p-4 sm:p-6 lg:p-8 pt-16 lg:pt-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8">
+            Manage About Section
+          </h1>
 
         <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
           <div className="mb-6">
@@ -86,6 +87,7 @@ export default function AdminAboutPage() {
             {loading ? 'Updating...' : 'Update About Section'}
           </button>
         </form>
+        </div>
       </div>
     </AdminLayout>
   );

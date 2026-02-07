@@ -8,6 +8,7 @@ import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
 import passwordResetRoutes from './routes/passwordResetRoutes';
 import aboutRoutes from './routes/aboutRoutes';
+import serviceRoutes from './routes/serviceRoutes';
 import { errorHandler, notFound } from './middleware/errorHandler';
 
 // Load environment variables FIRST
@@ -34,6 +35,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/password-reset', passwordResetRoutes);
 app.use('/api/about', aboutRoutes);
+app.use('/api/services', serviceRoutes);
 
 // Error handling
 app.use(notFound);
