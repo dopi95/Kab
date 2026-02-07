@@ -10,6 +10,7 @@ import passwordResetRoutes from './routes/passwordResetRoutes';
 import aboutRoutes from './routes/aboutRoutes';
 import serviceRoutes from './routes/serviceRoutes';
 import contactRoutes from './routes/contactRoutes';
+import faqRoutes from './routes/faqRoutes';
 import { errorHandler, notFound } from './middleware/errorHandler';
 
 // Load environment variables FIRST
@@ -38,6 +39,7 @@ app.use('/api/password-reset', passwordResetRoutes);
 app.use('/api/about', aboutRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/faqs', faqRoutes);
 
 // Error handling
 app.use(notFound);

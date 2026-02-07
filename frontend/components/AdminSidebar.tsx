@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { FaChartLine, FaUser, FaFileAlt, FaCog, FaUsers, FaFolderOpen, FaEnvelope, FaFileInvoice, FaSignOutAlt, FaGlobe } from 'react-icons/fa';
+import { FaChartLine, FaUser, FaFileAlt, FaCog, FaUsers, FaFolderOpen, FaEnvelope, FaFileInvoice, FaSignOutAlt, FaGlobe, FaQuestionCircle } from 'react-icons/fa';
 
 interface SidebarProps {
   user: any;
@@ -65,6 +65,7 @@ export default function AdminSidebar({ user }: SidebarProps) {
     { icon: FaFileAlt, label: 'About', path: '/admin/about' },
     { icon: FaCog, label: 'Services', path: '/admin/services' },
     { icon: FaEnvelope, label: 'Contacts', path: '/admin/contacts', badge: unreadCount },
+    { icon: FaQuestionCircle, label: 'FAQs', path: '/admin/faqs' },
     { icon: FaUsers, label: 'Users', path: '/admin/users' },
     { icon: FaFolderOpen, label: 'Projects', path: '/admin/projects' },
     { icon: FaFileInvoice, label: 'Messages', path: '/admin/messages' },
