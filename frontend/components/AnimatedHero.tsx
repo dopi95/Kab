@@ -52,7 +52,7 @@ export default function AnimatedHero() {
             </div>
           </div>
 
-          <div className="relative h-[280px] sm:h-[350px] md:h-[450px] lg:h-[600px] order-1 md:order-2">
+          <div className="relative h-[280px] sm:h-[350px] md:h-[450px] lg:h-[600px] order-1 md:order-2 mt-20 md:mt-0">
             <svg viewBox="0 0 400 600" className="w-full h-full max-w-md mx-auto md:max-w-full">
               <defs>
                 <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
