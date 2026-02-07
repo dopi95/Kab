@@ -56,11 +56,20 @@ export default function Header() {
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Portfolio', href: '#portfolio' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('/')) {
+      // Let Next.js handle page navigation
+      return;
+    }
     e.preventDefault();
+    // If we're on contact page and clicking home links, go to home first
+    if (pathname === '/contact' && href.startsWith('#')) {
+      window.location.href = '/' + href;
+      return;
+    }
     if (href === '#hero') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setIsMobileMenuOpen(false);

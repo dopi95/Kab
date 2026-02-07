@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { FaChartLine, FaUser, FaFileAlt, FaCog, FaUsers, FaFolderOpen, FaEnvelope, FaFileInvoice, FaSignOutAlt, FaGlobe } from 'react-icons/fa';
@@ -11,8 +11,48 @@ interface SidebarProps {
 
 export default function AdminSidebar({ user }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const router = useRouter();
   const pathname = usePathname();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const previousCountRef = useRef(0);
+  const hasPlayedInitialSound = useRef(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      audioRef.current = new Audio('https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3');
+      audioRef.current.volume = 0.4;
+    }
+
+    const fetchUnreadCount = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact/unread-count`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await response.json();
+        if (data.success) {
+          const newCount = data.count;
+          
+          if (newCount > 0 && !hasPlayedInitialSound.current) {
+            audioRef.current?.play().catch(() => {});
+            hasPlayedInitialSound.current = true;
+          } else if (newCount > previousCountRef.current && previousCountRef.current > 0) {
+            audioRef.current?.play().catch(() => {});
+          }
+          
+          previousCountRef.current = newCount;
+          setUnreadCount(newCount);
+        }
+      } catch (error) {
+        console.error('Failed to fetch unread count:', error);
+      }
+    };
+
+    fetchUnreadCount();
+    const interval = setInterval(fetchUnreadCount, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -24,10 +64,10 @@ export default function AdminSidebar({ user }: SidebarProps) {
     { icon: FaUser, label: 'My Profile', path: '/admin/profile' },
     { icon: FaFileAlt, label: 'About', path: '/admin/about' },
     { icon: FaCog, label: 'Services', path: '/admin/services' },
+    { icon: FaEnvelope, label: 'Contacts', path: '/admin/contacts', badge: unreadCount },
     { icon: FaUsers, label: 'Users', path: '/admin/users' },
     { icon: FaFolderOpen, label: 'Projects', path: '/admin/projects' },
-    { icon: FaEnvelope, label: 'Messages', path: '/admin/messages' },
-    { icon: FaFileInvoice, label: 'Content', path: '/admin/content' },
+    { icon: FaFileInvoice, label: 'Messages', path: '/admin/messages' },
     { icon: FaCog, label: 'Settings', path: '/admin/settings' },
   ];
 
@@ -106,14 +146,21 @@ export default function AdminSidebar({ user }: SidebarProps) {
                       router.push(item.path);
                       setIsOpen(false);
                     }}
-                    className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-200 ${
                       pathname === item.path
                         ? 'bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white shadow-lg'
                         : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                   >
-                    <IconComponent className="text-sm" />
-                    <span className="text-sm font-medium">{item.label}</span>
+                    <div className="flex items-center space-x-2">
+                      <IconComponent className="text-sm" />
+                      <span className="text-sm font-medium">{item.label}</span>
+                    </div>
+                    {item.badge !== undefined && item.badge > 0 && (
+                      <span className="bg-red-500 text-white text-[11px] font-semibold px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none">
+                        {item.badge > 99 ? '99+' : item.badge}
+                      </span>
+                    )}
                   </button>
                 </li>
               );
