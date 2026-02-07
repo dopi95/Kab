@@ -21,6 +21,7 @@ export default function AdminSidebar({ user }: SidebarProps) {
   const menuItems = [
     { icon: '📊', label: 'Dashboard', path: '/admin' },
     { icon: '👤', label: 'My Profile', path: '/admin/profile' },
+    { icon: '📝', label: 'About', path: '/admin/about' },
     { icon: '👥', label: 'Users', path: '/admin/users' },
     { icon: '📁', label: 'Projects', path: '/admin/projects' },
     { icon: '💬', label: 'Messages', path: '/admin/messages' },

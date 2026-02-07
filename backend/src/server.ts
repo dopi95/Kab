@@ -7,6 +7,7 @@ import connectDB from './config/database';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
 import passwordResetRoutes from './routes/passwordResetRoutes';
+import aboutRoutes from './routes/aboutRoutes';
 import { errorHandler, notFound } from './middleware/errorHandler';
 
 // Load environment variables FIRST
@@ -32,6 +33,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/password-reset', passwordResetRoutes);
+app.use('/api/about', aboutRoutes);
 
 // Error handling
 app.use(notFound);
