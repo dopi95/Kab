@@ -4,18 +4,41 @@ import { useState, useEffect } from 'react';
 import AdminSidebar from '@/components/AdminSidebar';
 
 export default function FounderMessagePage() {
+  const [user, setUser] = useState<any>(null);
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '', type: '' });
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
+    fetchUser();
     fetchFounder();
   }, []);
+
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+      }
+    } catch (error) {
+      console.error('Error fetching user:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchFounder = async () => {
     try {
@@ -56,7 +79,7 @@ export default function FounderMessagePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setUploading(true);
 
     const formData = new FormData();
     formData.append('name', name);
@@ -82,7 +105,7 @@ export default function FounderMessagePage() {
     } catch (error) {
       showToast('Error updating founder message', 'error');
     } finally {
-      setLoading(false);
+      setUploading(false);
     }
   };
 
@@ -109,9 +132,11 @@ export default function FounderMessagePage() {
     }
   };
 
+  if (loading || !user) return null;
+
   return (
     <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
-      <AdminSidebar />
+      <AdminSidebar user={user} />
       <div className="flex-1 p-8 ml-0 md:ml-64">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 mt-16 md:mt-0">Founder's Message</h1>
 
@@ -182,10 +207,10 @@ export default function FounderMessagePage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={uploading}
             className="bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white px-6 py-3 rounded-lg hover:shadow-lg transition disabled:opacity-50"
           >
-            {loading ? 'Saving...' : 'Save Founder Message'}
+            {uploading ? 'Saving...' : 'Save Founder Message'}
           </button>
 
           {existingImages.length > 0 && (

@@ -14,6 +14,7 @@ import contactRoutes from './routes/contactRoutes';
 import faqRoutes from './routes/faqRoutes';
 import assetRoutes from './routes/assetRoutes';
 import founderRoutes from './routes/founderRoutes';
+import portfolioRoutes from './routes/portfolioRoutes';
 import { errorHandler, notFound } from './middleware/errorHandler';
 
 // Load environment variables FIRST
@@ -46,6 +47,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/faqs', faqRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/api/founder', founderRoutes);
+app.use('/api/portfolio', portfolioRoutes);
 
 // Error handling
 app.use(notFound);

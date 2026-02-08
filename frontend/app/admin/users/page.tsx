@@ -9,6 +9,7 @@ interface User {
   name: string;
   email: string;
   role: string;
+  profileImage?: string;
   plainPassword?: string;
   createdAt: string;
 }
@@ -169,7 +170,18 @@ export default function AdminUsersPage() {
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
               {users.map((user) => (
                 <tr key={user._id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">{user.name}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      {user.profileImage ? (
+                        <img src={user.profileImage} alt={user.name} className="w-10 h-10 rounded-full object-cover" />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#A97E50] to-[#C4A86D] flex items-center justify-center text-white font-bold">
+                          {user.name[0].toUpperCase()}
+                        </div>
+                      )}
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">{user.name}</span>
+                    </div>
+                  </td>
                   <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">{user.email}</td>
                   <td className="px-6 py-4">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}`}>
@@ -199,8 +211,15 @@ export default function AdminUsersPage() {
         <div className="md:hidden space-y-4">
           {users.map((user) => (
             <div key={user._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
-              <div className="flex justify-between items-start mb-3">
-                <div>
+              <div className="flex items-center gap-3 mb-3">
+                {user.profileImage ? (
+                  <img src={user.profileImage} alt={user.name} className="w-12 h-12 rounded-full object-cover" />
+                ) : (
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#A97E50] to-[#C4A86D] flex items-center justify-center text-white font-bold">
+                    {user.name[0].toUpperCase()}
+                  </div>
+                )}
+                <div className="flex-1">
                   <h3 className="font-bold text-gray-900 dark:text-white">{user.name}</h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{user.email}</p>
                 </div>

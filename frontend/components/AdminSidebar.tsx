@@ -74,6 +74,7 @@ export default function AdminSidebar({ user }: SidebarProps) {
     { icon: FaUsers, label: 'Users', path: '/admin/users' },
     { icon: FaFolderOpen, label: 'Projects', path: '/admin/projects' },
     { icon: FaFileInvoice, label: 'Send Data', path: '/admin/send-data' },
+    { icon: FaUser, label: 'My Portfolio', path: '/admin/portfolio' },
   ];
 
   return (

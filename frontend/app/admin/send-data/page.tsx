@@ -9,6 +9,7 @@ interface User {
   name: string;
   email: string;
   role: string;
+  profileImage?: string;
 }
 
 interface Asset {
@@ -249,9 +250,13 @@ export default function SendDataPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredUsers.map((user) => (
             <div key={user._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-              <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] rounded-full text-white text-2xl font-bold">
-                {user.name[0].toUpperCase()}
-              </div>
+              {user.profileImage ? (
+                <img src={user.profileImage} alt={user.name} className="w-16 h-16 mx-auto mb-4 rounded-full object-cover" />
+              ) : (
+                <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] rounded-full text-white text-2xl font-bold">
+                  {user.name[0].toUpperCase()}
+                </div>
+              )}
               <h3 className="text-lg font-bold text-center text-gray-900 dark:text-white mb-1">{user.name}</h3>
               <p className="text-sm text-center text-gray-600 dark:text-gray-400 mb-4">{user.email}</p>
               <button
