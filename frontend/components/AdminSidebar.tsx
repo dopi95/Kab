@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { FaChartLine, FaUser, FaFileAlt, FaCog, FaUsers, FaFolderOpen, FaEnvelope, FaFileInvoice, FaSignOutAlt, FaGlobe, FaQuestionCircle } from 'react-icons/fa';
+import { FaChartLine, FaUser, FaFileAlt, FaCog, FaUsers, FaFolderOpen, FaEnvelope, FaFileInvoice, FaSignOutAlt, FaGlobe, FaQuestionCircle, FaDownload } from 'react-icons/fa';
 
 interface SidebarProps {
   user: any;
@@ -104,7 +104,7 @@ export default function AdminSidebar({ user }: SidebarProps) {
       <aside
         className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 shadow-xl z-40 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 flex flex-col`}
+        } lg:translate-x-0 flex flex-col overflow-y-auto`}
       >
         {/* Logo */}
         <div className="p-4 border-b border-gray-200 dark:border-gray-800 pt-16 lg:pt-4">
@@ -140,7 +140,7 @@ export default function AdminSidebar({ user }: SidebarProps) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-2">
+        <nav className="flex-1 px-3 py-2 overflow-y-auto">
           <ul className="space-y-1">
             {menuItems.map((item) => {
               const IconComponent = item.icon;
@@ -176,14 +176,23 @@ export default function AdminSidebar({ user }: SidebarProps) {
         {/* Logout Button */}
         <div className="px-3 py-2 border-t border-gray-200 dark:border-gray-800 space-y-1">
           <a
+            href="/install"
+            className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
+            onClick={() => setIsOpen(false)}
+          >
+            <FaDownload className="text-sm" />
+            <span className="text-sm font-medium">Install App</span>
+          </a>
+          <a
             href="/"
             className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
+            onClick={() => setIsOpen(false)}
           >
             <FaGlobe className="text-sm" />
             <span className="text-sm font-medium">Back to Website</span>
           </a>
           <button
-            onClick={handleLogout}
+            onClick={() => { handleLogout(); setIsOpen(false); }}
             className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200"
           >
             <FaSignOutAlt className="text-sm" />
