@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import AdminLayout from '@/components/AdminLayout';
-import { FaPaperPlane, FaTimes, FaCheckCircle, FaExclamationCircle, FaVideo, FaImage, FaTrash, FaEdit } from 'react-icons/fa';
+import { FaPaperPlane, FaTimes, FaCheckCircle, FaExclamationCircle, FaVideo, FaImage, FaTrash, FaEdit, FaSearch } from 'react-icons/fa';
 
 interface User {
   _id: string;
@@ -21,6 +21,8 @@ interface Asset {
 
 export default function SendDataPage() {
   const [users, setUsers] = useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
@@ -45,6 +47,21 @@ export default function SendDataPage() {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredUsers(users);
+    } else {
+      const query = searchQuery.toLowerCase();
+      setFilteredUsers(
+        users.filter(
+          (user) =>
+            user.name.toLowerCase().includes(query) ||
+            user.email.toLowerCase().includes(query)
+        )
+      );
+    }
+  }, [searchQuery, users]);
 
   const handleDeleteAsset = async (assetId: string) => {
     if (!confirm('Are you sure you want to delete this asset?')) return;
@@ -125,7 +142,9 @@ export default function SendDataPage() {
       });
       const data = await response.json();
       if (data.success) {
-        setUsers(data.data.filter((u: User) => u.role === 'user'));
+        const usersList = data.data.filter((u: User) => u.role === 'user');
+        setUsers(usersList);
+        setFilteredUsers(usersList);
       }
     } catch (error) {
       showToast('Failed to fetch users', 'error');
@@ -214,8 +233,21 @@ export default function SendDataPage() {
           <p className="text-gray-600 dark:text-gray-400">Send videos or photos to users</p>
         </div>
 
+        <div className="mb-6">
+          <div className="relative">
+            <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by name or email..."
+              className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#A97E50] focus:border-transparent"
+            />
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {users.map((user) => (
+          {filteredUsers.map((user) => (
             <div key={user._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
               <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] rounded-full text-white text-2xl font-bold">
                 {user.name[0].toUpperCase()}
