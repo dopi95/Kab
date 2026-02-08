@@ -122,11 +122,10 @@ export default function MyAssetsPage() {
                       className="relative aspect-video mb-4 cursor-pointer hover:opacity-90 transition"
                       onClick={() => setSelectedImage(asset.url)}
                     >
-                      <Image
+                      <img
                         src={asset.url}
                         alt="Asset"
-                        fill
-                        className="object-cover rounded-lg"
+                        className="w-full h-full object-cover rounded-lg"
                       />
                     </div>
                   )}
@@ -161,11 +160,10 @@ export default function MyAssetsPage() {
             <FaTimes size={24} />
           </button>
           <div className="relative max-w-7xl max-h-[90vh] w-full h-full">
-            <Image
+            <img
               src={selectedImage}
               alt="Full view"
-              fill
-              className="object-contain"
+              className="w-full h-full object-contain"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
