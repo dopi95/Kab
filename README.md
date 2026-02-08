@@ -1,4 +1,7 @@
-# Kab Creative Lab
+<div align="center">
+  <img src="frontend/public/assets/logo.png" alt="Kab Creative Lab Logo" width="200"/>
+  <h1>Kab Creative Lab</h1>
+</div>
 
 A full-stack web application for managing creative portfolios, projects, and client communications.
 
