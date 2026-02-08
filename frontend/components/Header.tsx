@@ -65,8 +65,8 @@ export default function Header() {
       return;
     }
     e.preventDefault();
-    // If we're on contact page and clicking home links, go to home first
-    if (pathname === '/contact' && href.startsWith('#')) {
+    // If we're not on home page and clicking hash links, go to home first
+    if (pathname !== '/' && href.startsWith('#')) {
       window.location.href = '/' + href;
       return;
     }

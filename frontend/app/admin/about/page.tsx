@@ -58,6 +58,15 @@ export default function AdminAboutPage() {
             Manage About Section
           </h1>
 
+          <div className="mb-6">
+            <a
+              href="/admin/founder-message"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white font-semibold rounded-lg hover:shadow-lg transition"
+            >
+              Manage Founder's Message
+            </a>
+          </div>
+
         <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
           <div className="mb-6">
             <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">

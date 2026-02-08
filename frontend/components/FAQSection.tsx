@@ -36,40 +36,77 @@ export default function FAQSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Animated Character */}
           <div className="flex justify-center lg:justify-start order-1">
-            <div className="relative w-72 h-72">
-              {/* Thinking Person Animation */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                {/* Body */}
-                <div className="absolute bottom-8 w-24 h-40 bg-gradient-to-b from-[#A97E50] to-[#C4A86D] rounded-t-full"></div>
+            <div className="relative w-72 h-80">
+              <svg viewBox="0 0 200 320" className="w-full h-full drop-shadow-2xl">
+                <defs>
+                  <linearGradient id="skinFaq" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style={{ stopColor: '#FFD4A3' }} />
+                    <stop offset="100%" style={{ stopColor: '#FFBE8F' }} />
+                  </linearGradient>
+                  <linearGradient id="brandFaq" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style={{ stopColor: '#A97E50' }} />
+                    <stop offset="100%" style={{ stopColor: '#C4A86D' }} />
+                  </linearGradient>
+                  <filter id="shadowFaq">
+                    <feDropShadow dx="0" dy="4" stdDeviation="3" floodOpacity="0.3"/>
+                  </filter>
+                </defs>
                 
-                {/* Arms */}
-                <div className="absolute bottom-20 -left-4 w-16 h-6 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] rounded-full transform -rotate-45 animate-wave"></div>
-                <div className="absolute bottom-28 right-0 w-16 h-6 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] rounded-full transform rotate-45"></div>
+                <g filter="url(#shadowFaq)">
+                  {/* Body */}
+                  <rect x="70" y="160" width="60" height="90" rx="12" fill="url(#brandFaq)" />
+                  
+                  {/* Left Arm - Scratching head */}
+                  <ellipse cx="55" cy="175" rx="16" ry="40" fill="url(#brandFaq)" className="animate-scratch-head" style={{ transformOrigin: '55px 165px' }} />
+                  <circle cx="45" cy="215" r="14" fill="url(#skinFaq)" />
+                  
+                  {/* Right Arm - Pointing up */}
+                  <ellipse cx="145" cy="175" rx="16" ry="40" fill="url(#brandFaq)" className="animate-point-up" style={{ transformOrigin: '145px 165px' }} />
+                  <circle cx="155" cy="215" r="14" fill="url(#skinFaq)" />
+                  
+                  {/* Legs */}
+                  <rect x="78" y="245" width="20" height="50" rx="10" fill="#8B7355" />
+                  <ellipse cx="88" cy="300" rx="16" ry="10" fill="#C4A86D" />
+                  <rect x="102" y="245" width="20" height="50" rx="10" fill="#8B7355" />
+                  <ellipse cx="112" cy="300" rx="16" ry="10" fill="#C4A86D" />
+                  
+                  {/* Head with thinking expression */}
+                  <g className="animate-head-tilt">
+                    <circle cx="100" cy="110" r="48" fill="url(#skinFaq)" />
+                    
+                    {/* Hair */}
+                    <ellipse cx="100" cy="80" rx="52" ry="40" fill="#654321" />
+                    <circle cx="75" cy="85" r="20" fill="#654321" />
+                    <circle cx="125" cy="85" r="20" fill="#654321" />
+                    
+                    {/* Eyes - thinking */}
+                    <ellipse cx="85" cy="105" rx="6" ry="8" fill="#333" className="animate-eye-think" />
+                    <circle cx="83" cy="103" r="2" fill="white" />
+                    <ellipse cx="115" cy="105" rx="6" ry="8" fill="#333" className="animate-eye-think" />
+                    <circle cx="113" cy="103" r="2" fill="white" />
+                    
+                    {/* Eyebrows - raised */}
+                    <path d="M 78 95 Q 85 92 92 95" stroke="#654321" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+                    <path d="M 108 95 Q 115 92 122 95" stroke="#654321" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+                    
+                    {/* Mouth - thinking */}
+                    <path d="M 88 125 Q 100 128 112 125" stroke="#A97E50" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+                    
+                    {/* Cheeks */}
+                    <circle cx="72" cy="115" r="7" fill="#FFB6C1" opacity="0.6" />
+                    <circle cx="128" cy="115" r="7" fill="#FFB6C1" opacity="0.6" />
+                  </g>
+                </g>
                 
-                {/* Head */}
-                <div className="relative animate-bounce-slow z-10">
-                  <div className="w-28 h-28 bg-gradient-to-br from-[#A97E50] to-[#C4A86D] rounded-full relative shadow-xl">
-                    {/* Eyes */}
-                    <div className="absolute top-10 left-7 w-4 h-4 bg-white rounded-full animate-blink">
-                      <div className="absolute top-1 left-1 w-2 h-2 bg-gray-900 rounded-full"></div>
-                    </div>
-                    <div className="absolute top-10 right-7 w-4 h-4 bg-white rounded-full animate-blink">
-                      <div className="absolute top-1 left-1 w-2 h-2 bg-gray-900 rounded-full"></div>
-                    </div>
-                    {/* Smile */}
-                    <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2 w-10 h-5 border-b-3 border-white rounded-full"></div>
-                  </div>
-                  
-                  {/* Question Mark Bubble */}
-                  <div className="absolute -top-10 -right-10 bg-white dark:bg-gray-800 rounded-full w-20 h-20 flex items-center justify-center shadow-2xl animate-float border-4 border-[#A97E50]">
-                    <span className="text-4xl font-bold text-[#A97E50]">?</span>
-                  </div>
-                  
-                  {/* Thought Lines */}
-                  <div className="absolute -top-4 -right-4 w-3 h-3 bg-white dark:bg-gray-800 rounded-full shadow-lg animate-pulse"></div>
-                  <div className="absolute -top-6 -right-6 w-2 h-2 bg-white dark:bg-gray-800 rounded-full shadow-lg animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                </div>
-              </div>
+                {/* Question Mark Bubble */}
+                <g className="animate-bubble-float">
+                  <circle cx="160" cy="60" r="28" fill="white" stroke="#A97E50" strokeWidth="3" />
+                  <text x="160" y="75" fontSize="36" fontWeight="bold" fill="#A97E50" textAnchor="middle">?</text>
+                  {/* Thought bubbles */}
+                  <circle cx="145" cy="85" r="6" fill="white" stroke="#A97E50" strokeWidth="2" />
+                  <circle cx="135" cy="95" r="4" fill="white" stroke="#A97E50" strokeWidth="2" />
+                </g>
+              </svg>
             </div>
           </div>
 
@@ -118,49 +155,41 @@ export default function FAQSection() {
       </div>
 
       <style jsx>{`
-        @keyframes bounce-slow {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
+        @keyframes head-tilt {
+          0%, 100% { transform: rotate(-3deg); }
+          50% { transform: rotate(3deg); }
         }
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0) rotate(-10deg);
-          }
-          50% {
-            transform: translateY(-15px) rotate(-10deg);
-          }
+        @keyframes scratch-head {
+          0%, 100% { transform: rotate(-45deg); }
+          50% { transform: rotate(-25deg); }
         }
-        @keyframes blink {
-          0%, 90%, 100% {
-            opacity: 1;
-          }
-          95% {
-            opacity: 0;
-          }
+        @keyframes point-up {
+          0%, 100% { transform: rotate(45deg) translateY(0); }
+          50% { transform: rotate(35deg) translateY(-5px); }
         }
-        @keyframes wave {
-          0%, 100% {
-            transform: rotate(-45deg);
-          }
-          50% {
-            transform: rotate(-35deg);
-          }
+        @keyframes bubble-float {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-15px) scale(1.05); }
         }
-        .animate-bounce-slow {
-          animation: bounce-slow 3s ease-in-out infinite;
+        @keyframes eye-think {
+          0%, 90%, 100% { transform: scaleY(1); }
+          95% { transform: scaleY(0.1); }
         }
-        .animate-float {
-          animation: float 2s ease-in-out infinite;
+        .animate-head-tilt {
+          animation: head-tilt 3s ease-in-out infinite;
+          transform-origin: 100px 110px;
         }
-        .animate-blink {
-          animation: blink 4s ease-in-out infinite;
+        .animate-scratch-head {
+          animation: scratch-head 2s ease-in-out infinite;
         }
-        .animate-wave {
-          animation: wave 2s ease-in-out infinite;
+        .animate-point-up {
+          animation: point-up 2.5s ease-in-out infinite;
+        }
+        .animate-bubble-float {
+          animation: bubble-float 3s ease-in-out infinite;
+        }
+        .animate-eye-think {
+          animation: eye-think 5s ease-in-out infinite;
         }
       `}</style>
     </section>
