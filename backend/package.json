@@ -11,6 +11,7 @@
     "seed:admin": "ts-node src/scripts/seedAdmin.ts",
     "seed:user": "ts-node src/scripts/seedUser.ts",
     "seed:services": "ts-node src/scripts/seedServices.ts",
+    "seed:projects": "ts-node src/scripts/seedProjects.ts",
     "seed:faqs": "ts-node src/seedFAQs.ts"
   },
   "dependencies": {

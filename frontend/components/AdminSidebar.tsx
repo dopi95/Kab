@@ -110,7 +110,7 @@ export default function AdminSidebar({ user }: SidebarProps) {
         <div className="p-4 border-b border-gray-200 dark:border-gray-800 pt-16 lg:pt-4">
           <div className="flex items-center space-x-2">
             <div className="relative w-8 h-8">
-              <Image src="/assets/logo.png" alt="Logo" fill className="object-contain" />
+              <Image src="/assets/logo.png" alt="Logo" fill sizes="32px" className="object-contain" />
             </div>
             <h1 className="text-lg font-bold bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent">
               Admin Panel
@@ -123,7 +123,7 @@ export default function AdminSidebar({ user }: SidebarProps) {
           <div className="flex items-center space-x-2">
             {user?.profileImage ? (
               <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                <Image src={user.profileImage} alt="Profile" fill className="object-cover" />
+                <Image src={user.profileImage} alt="Profile" fill sizes="48px" className="object-cover" />
               </div>
             ) : (
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#A97E50] to-[#C4A86D] flex items-center justify-center text-white text-lg font-semibold flex-shrink-0">
