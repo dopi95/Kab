@@ -357,7 +357,7 @@ export default function PortfolioPage() {
                           </svg>
                           {exp.period}
                         </p>
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{exp.description || exp.desc}</p>
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{(exp as any).description || (exp as any).desc}</p>
                       </div>
                     </div>
                   </div>
@@ -550,9 +550,11 @@ export default function PortfolioPage() {
                 <div className="p-5">
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{selectedProject.title}</h3>
                   <p className="text-base text-gray-600 dark:text-gray-300 mb-4">{selectedProject.description}</p>
-                  <span className="inline-block px-4 py-2 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white rounded-full text-sm font-semibold">
-                    {selectedProject.category}
-                  </span>
+                  {(selectedProject as any).category && (
+                    <span className="inline-block px-4 py-2 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white rounded-full text-sm font-semibold">
+                      {(selectedProject as any).category}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
