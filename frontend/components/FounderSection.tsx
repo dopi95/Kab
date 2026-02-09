@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { FaQuoteLeft } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface Founder {
   name: string;
@@ -13,10 +13,38 @@ interface Founder {
 export default function FounderSection() {
   const router = useRouter();
   const [founder, setFounder] = useState<Founder | null>(null);
+  const [activeImage, setActiveImage] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchFounder();
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), 2000);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    const interval = setInterval(() => {
+      setActiveImage((prev) => (prev + 1) % 3);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   const fetchFounder = async () => {
     try {
@@ -31,7 +59,7 @@ export default function FounderSection() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+    <section ref={sectionRef} className="py-20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -55,19 +83,32 @@ export default function FounderSection() {
             <div className="relative min-h-[600px] md:min-h-96 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 px-4 order-1 md:order-2">
               {founder?.images && founder.images.length > 0 ? (
                 founder.images.map((img, idx) => (
-                  <div key={idx} className={`w-full md:w-80 h-96 md:h-64 rounded-2xl overflow-hidden shadow-2xl transform ${idx === 0 ? 'rotate-3 md:rotate-6' : idx === 1 ? '-rotate-2 md:-rotate-3' : 'rotate-2 md:rotate-3'} hover:rotate-0 transition-all duration-500 hover:scale-105 border-4 border-white dark:border-gray-800`}>
+                  <div 
+                    key={idx} 
+                    className={`w-full md:w-80 h-96 md:h-64 rounded-2xl overflow-hidden shadow-2xl transform border-4 border-white dark:border-gray-800 transition-all duration-1000 ${
+                      activeImage === idx 
+                        ? 'scale-110 z-30 rotate-0 opacity-100' 
+                        : 'scale-90 opacity-70 ' + (idx === 0 ? 'rotate-6 z-10' : idx === 1 ? '-rotate-3 z-20' : 'rotate-3 z-10')
+                    }`}
+                  >
                     <img src={img} alt={`Founder ${idx + 1}`} className="w-full h-full object-cover" />
                   </div>
                 ))
               ) : (
                 <>
-                  <div className="w-full md:w-80 h-96 md:h-64 rounded-2xl overflow-hidden shadow-2xl transform rotate-3 md:rotate-6 hover:rotate-0 transition-all duration-500 hover:scale-105 border-4 border-white dark:border-gray-800">
+                  <div className={`w-full md:w-80 h-96 md:h-64 rounded-2xl overflow-hidden shadow-2xl transform border-4 border-white dark:border-gray-800 transition-all duration-1000 ${
+                    activeImage === 0 ? 'scale-110 z-30 rotate-0 opacity-100' : 'scale-90 opacity-70 rotate-6 z-10'
+                  }`}>
                     <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500" alt="Team" className="w-full h-full object-cover" />
                   </div>
-                  <div className="w-full md:w-80 h-96 md:h-64 rounded-2xl overflow-hidden shadow-2xl transform -rotate-2 md:-rotate-3 hover:rotate-0 transition-all duration-500 hover:scale-105 border-4 border-white dark:border-gray-800">
+                  <div className={`w-full md:w-80 h-96 md:h-64 rounded-2xl overflow-hidden shadow-2xl transform border-4 border-white dark:border-gray-800 transition-all duration-1000 ${
+                    activeImage === 1 ? 'scale-110 z-30 rotate-0 opacity-100' : 'scale-90 opacity-70 -rotate-3 z-20'
+                  }`}>
                     <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500" alt="Creative" className="w-full h-full object-cover" />
                   </div>
-                  <div className="w-full md:w-80 h-96 md:h-64 rounded-2xl overflow-hidden shadow-2xl transform rotate-2 md:rotate-3 hover:rotate-0 transition-all duration-500 hover:scale-105 border-4 border-white dark:border-gray-800">
+                  <div className={`w-full md:w-80 h-96 md:h-64 rounded-2xl overflow-hidden shadow-2xl transform border-4 border-white dark:border-gray-800 transition-all duration-1000 ${
+                    activeImage === 2 ? 'scale-110 z-30 rotate-0 opacity-100' : 'scale-90 opacity-70 rotate-3 z-10'
+                  }`}>
                     <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=500" alt="Innovation" className="w-full h-full object-cover" />
                   </div>
                 </>

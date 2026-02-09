@@ -90,11 +90,11 @@ export default function ServicesSection() {
         <div className="lg:hidden">
           <div className="relative">
             {/* Character - Mobile */}
-            <div className="absolute left-4 z-10" style={{
+            <div className="absolute left-2 z-10" style={{
               top: animationComplete ? '0px' : `${activeService * 100}px`,
               transition: animationComplete ? 'top 1.5s ease-in-out' : 'top 0.6s ease-out'
             }}>
-              <svg viewBox="0 0 100 200" className="w-24 h-32">
+              <svg viewBox="0 0 200 500" className="w-32 h-auto drop-shadow-2xl">
                 <defs>
                   <linearGradient id="skinGradMobile" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" style={{ stopColor: '#FFD4A3', stopOpacity: 1 }} />
@@ -104,53 +104,73 @@ export default function ServicesSection() {
                     <stop offset="0%" style={{ stopColor: '#A97E50', stopOpacity: 1 }} />
                     <stop offset="100%" style={{ stopColor: '#C4A86D', stopOpacity: 1 }} />
                   </linearGradient>
+                  <filter id="shadowMobile">
+                    <feDropShadow dx="0" dy="6" stdDeviation="4" floodOpacity="0.3"/>
+                  </filter>
                 </defs>
 
-                <g className="animate-float-slow">
-                  <rect x="15" y="80" width="70" height="90" rx="10" fill="url(#brandGradMobile)" />
+                <g className="animate-float-slow" filter="url(#shadowMobile)">
+                  {/* Body */}
+                  <rect x="65" y="280" width="70" height="110" rx="10" fill="url(#brandGradMobile)" />
                   
-                  <g className="arm-left">
-                    <ellipse cx="5" cy="95" rx="14" ry="40" fill="url(#brandGradMobile)" transform="rotate(-10 5 95)" />
-                    <circle cx="0" cy="130" r="12" fill="url(#skinGradMobile)" />
+                  {/* Left Arm - Waving */}
+                  <g className="arm-left-mobile">
+                    <ellipse cx="55" cy="300" rx="16" ry="45" fill="url(#brandGradMobile)" transform="rotate(-20 55 300)" />
+                    <circle cx="45" cy="340" r="14" fill="url(#skinGradMobile)" />
+                    <circle cx="42" cy="343" r="7" fill="#C4A86D" opacity="0.8" className="animate-pulse" />
                   </g>
 
-                  <g className="arm-right" style={{
+                  {/* Right Arm - Pointing */}
+                  <g className="arm-right-mobile" style={{
                     transform: 'rotate(40deg)',
-                    transformOrigin: '95px 95px',
-                    transition: 'transform 0.5s ease-out'
+                    transformOrigin: '145px 300px',
+                    animation: 'wave-arm 2s ease-in-out infinite'
                   }}>
-                    <ellipse cx="95" cy="95" rx="14" ry="40" fill="url(#brandGradMobile)" transform="rotate(10 95 95)" />
-                    <circle cx="100" cy="130" r="12" fill="url(#skinGradMobile)" />
-                    <circle cx="105" cy="135" r="6" fill="#C4A86D" opacity="0.8" className="animate-pulse" />
+                    <ellipse cx="145" cy="300" rx="16" ry="45" fill="url(#brandGradMobile)" transform="rotate(20 145 300)" />
+                    <circle cx="155" cy="340" r="14" fill="url(#skinGradMobile)" />
+                    <circle cx="160" cy="345" r="8" fill="#C4A86D" opacity="0.8" className="animate-pulse" style={{ animationDelay: '0.3s' }} />
                   </g>
 
+                  {/* Legs */}
                   <g className="leg-left animate-walk">
-                    <rect x="25" y="165" width="18" height="30" rx="9" fill="#8B7355" />
+                    <rect x="75" y="385" width="22" height="65" rx="11" fill="#8B7355" />
+                    <ellipse cx="86" cy="455" rx="18" ry="10" fill="#C4A86D" />
                   </g>
 
                   <g className="leg-right animate-walk-reverse">
-                    <rect x="47" y="165" width="18" height="30" rx="9" fill="#8B7355" />
+                    <rect x="103" y="385" width="22" height="65" rx="11" fill="#8B7355" />
+                    <ellipse cx="114" cy="455" rx="18" ry="10" fill="#C4A86D" />
                   </g>
 
-                  <circle cx="50" cy="50" r="40" fill="url(#skinGradMobile)" />
+                  {/* Head */}
+                  <circle cx="100" cy="230" r="50" fill="url(#skinGradMobile)" />
 
+                  {/* Hair */}
                   <g className="hair">
-                    <ellipse cx="50" cy="25" rx="45" ry="35" fill="#654321" />
-                    <circle cx="30" cy="30" r="16" fill="#654321" className="animate-bounce" style={{ animationDelay: '0.2s' }} />
-                    <circle cx="70" cy="30" r="16" fill="#654321" className="animate-bounce" style={{ animationDelay: '0.4s' }} />
+                    <ellipse cx="100" cy="200" rx="55" ry="45" fill="#654321" />
+                    <circle cx="75" cy="205" r="20" fill="#654321" className="animate-bounce" style={{ animationDelay: '0.2s', animationDuration: '2s' }} />
+                    <circle cx="125" cy="205" r="20" fill="#654321" className="animate-bounce" style={{ animationDelay: '0.4s', animationDuration: '2s' }} />
                   </g>
 
+                  {/* Face */}
                   <g className="face">
-                    <circle cx="38" cy="48" r="4" fill="#333" className="animate-blink" />
-                    <circle cx="62" cy="48" r="4" fill="#333" className="animate-blink" style={{ animationDelay: '0.1s' }} />
-                    <path d="M 42 62 Q 50 68 58 62" stroke="#A97E50" strokeWidth="2" fill="none" strokeLinecap="round" />
+                    {/* Eyes */}
+                    <circle cx="85" cy="225" r="5" fill="#333" className="animate-blink" />
+                    <circle cx="87" cy="223" r="2" fill="#fff" />
+                    <circle cx="115" cy="225" r="5" fill="#333" className="animate-blink" style={{ animationDelay: '0.1s' }} />
+                    <circle cx="117" cy="223" r="2" fill="#fff" />
+                    {/* Smile */}
+                    <path d="M 90 245 Q 100 252 110 245" stroke="#A97E50" strokeWidth="2" fill="none" strokeLinecap="round" />
+                    {/* Cheeks */}
+                    <circle cx="75" cy="235" r="6" fill="#FFB6C1" opacity="0.6" />
+                    <circle cx="125" cy="235" r="6" fill="#FFB6C1" opacity="0.6" />
                   </g>
                 </g>
               </svg>
             </div>
 
             {/* Services - Mobile */}
-            <div className="ml-28 grid grid-cols-1 gap-4 pr-2" style={{
+            <div className="ml-36 grid grid-cols-1 gap-4 pr-2" style={{
               minHeight: `${services.length * 110 + 200}px`
             }}>
               {services.map((service, index) => {
@@ -340,6 +360,10 @@ export default function ServicesSection() {
       </div>
 
       <style jsx>{`
+        @keyframes wave-arm {
+          0%, 100% { transform: rotate(40deg); }
+          50% { transform: rotate(50deg); }
+        }
         @keyframes slideIn {
           0% { 
             opacity: 0; 

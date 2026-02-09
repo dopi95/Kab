@@ -52,6 +52,8 @@ export default function PortfolioPage() {
   const [skillsInView, setSkillsInView] = useState(false);
   const [expInView, setExpInView] = useState(false);
   const [worksInView, setWorksInView] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   
   const heroRef = useRef<HTMLElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
@@ -68,7 +70,10 @@ export default function PortfolioPage() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            if (entry.target === heroRef.current) setHeroInView(true);
+            if (entry.target === heroRef.current) {
+              setHeroInView(true);
+              setTimeout(() => setIsVisible(true), 2000);
+            }
             if (entry.target === aboutRef.current) setAboutInView(true);
             if (entry.target === skillsRef.current) setSkillsInView(true);
             if (entry.target === expRef.current) setExpInView(true);
@@ -87,6 +92,14 @@ export default function PortfolioPage() {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    const interval = setInterval(() => {
+      setActiveImage((prev) => (prev + 1) % 3);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   useEffect(() => {
     if (!selectedProject || !isAutoPlay || !selectedProject.mediaFiles || selectedProject.mediaFiles.length <= 1) return;
@@ -221,35 +234,55 @@ export default function PortfolioPage() {
                   <div className="flex justify-center items-center">
                     <div className="relative w-full max-w-3xl h-64 md:h-80">
                       {portfolio?.heroImages && portfolio.heroImages.length > 0 ? (
-                        portfolio.heroImages.map((img, idx) => (
+                        portfolio.heroImages.map((img, idx) => {
+                          const rotations = ['-8deg', '4deg', '8deg'];
+                          const isActive = activeImage === idx;
+                          return (
                           <div
                             key={idx}
-                            className={`absolute w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transition-all duration-700 hover:scale-110 hover:z-40 ${
-                              idx === 0 ? 'left-0 md:left-10 top-0 rotate-[-8deg] z-20 animate-slide-in-left' :
-                              idx === 1 ? 'left-1/2 -translate-x-1/2 top-4 md:top-8 rotate-[4deg] z-30 animate-slide-in-up' :
-                              'right-0 md:right-10 top-0 rotate-[8deg] z-10 animate-slide-in-right'
+                            className={`absolute w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transition-all duration-1000 ${
+                              idx === 0 ? 'left-0 md:left-10 top-0 animate-slide-in-left' :
+                              idx === 1 ? 'left-1/2 -translate-x-1/2 top-4 md:top-8 animate-slide-in-up' :
+                              'right-0 md:right-10 top-0 animate-slide-in-right'
+                            } ${
+                              isActive ? 'scale-110 z-30 opacity-100' : 'scale-90 opacity-70'
                             }`}
-                            style={{ animationDelay: `${idx * 200 + 600}ms` }}
+                            style={{ 
+                              animationDelay: `${idx * 200 + 600}ms`,
+                              rotate: isActive ? '0deg' : rotations[idx],
+                              zIndex: isActive ? 30 : idx === 1 ? 20 : 10
+                            }}
                           >
                             <img src={img} alt={`Portfolio ${idx + 1}`} className="w-full h-full object-cover" />
                           </div>
-                        ))
+                        );}
+                        )
                       ) : (
                         ['https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500', 
                          'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500', 
-                         'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=500'].map((img, idx) => (
+                         'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=500'].map((img, idx) => {
+                          const rotations = ['-8deg', '4deg', '8deg'];
+                          const isActive = activeImage === idx;
+                          return (
                           <div
                             key={idx}
-                            className={`absolute w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transition-all duration-700 hover:scale-110 hover:z-40 ${
-                              idx === 0 ? 'left-0 md:left-10 top-0 rotate-[-8deg] z-20 animate-slide-in-left' :
-                              idx === 1 ? 'left-1/2 -translate-x-1/2 top-4 md:top-8 rotate-[4deg] z-30 animate-slide-in-up' :
-                              'right-0 md:right-10 top-0 rotate-[8deg] z-10 animate-slide-in-right'
+                            className={`absolute w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transition-all duration-1000 ${
+                              idx === 0 ? 'left-0 md:left-10 top-0 animate-slide-in-left' :
+                              idx === 1 ? 'left-1/2 -translate-x-1/2 top-4 md:top-8 animate-slide-in-up' :
+                              'right-0 md:right-10 top-0 animate-slide-in-right'
+                            } ${
+                              isActive ? 'scale-110 z-30 opacity-100' : 'scale-90 opacity-70'
                             }`}
-                            style={{ animationDelay: `${idx * 200 + 600}ms` }}
+                            style={{ 
+                              animationDelay: `${idx * 200 + 600}ms`,
+                              rotate: isActive ? '0deg' : rotations[idx],
+                              zIndex: isActive ? 30 : idx === 1 ? 20 : 10
+                            }}
                           >
                             <img src={img} alt={`Portfolio ${idx + 1}`} className="w-full h-full object-cover" />
                           </div>
-                        ))
+                        );}
+                        )
                       )}
                     </div>
                   </div>
