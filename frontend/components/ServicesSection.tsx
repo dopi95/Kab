@@ -94,7 +94,9 @@ export default function ServicesSection() {
           <div className="flex justify-center items-center py-20">
             <Spinner size="lg" />
           </div>
-        ) : (/* Mobile Layout */}
+        ) : (
+        <>
+        {/* Mobile Layout */}
         <div className="lg:hidden">
           <div className="relative">
             {/* Character - Mobile */}
@@ -365,6 +367,7 @@ export default function ServicesSection() {
             </div>
           </div>
         </div>
+        </>
         )}
       </div>
 
