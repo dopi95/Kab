@@ -75,7 +75,13 @@ export default function RootLayout({
               '@type': 'Organization',
               name: 'Kab Creative Lab',
               url: 'https://kabcreativelab.com',
-              logo: 'https://kabcreativelab.com/assets/logo.png',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://kabcreativelab.com/assets/logo.png',
+                width: 512,
+                height: 512,
+              },
+              image: 'https://kabcreativelab.com/assets/logo.png',
               description: 'Professional video production, branding, and creative services in Ethiopia',
               address: {
                 '@type': 'PostalAddress',
