@@ -37,8 +37,8 @@ export const metadata: Metadata = {
     images: ['https://kabcreativelab.com/assets/logo.png'],
   },
   icons: {
-    icon: '/assets/logo.png',
-    apple: '/assets/logo.png',
+    icon: '/images/icon.png',
+    apple: '/images/icon.png',
   },
   manifest: '/manifest.json',
   alternates: {
