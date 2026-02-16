@@ -78,11 +78,11 @@ export default function RootLayout({
               url: 'https://kabcreativelab.com',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://kabcreativelab.com/assets/logoo.png',
+                url: 'https://kabcreativelab.com/images/icon.png',
                 width: 512,
                 height: 512,
               },
-              image: 'https://kabcreativelab.com/assets/logoo.png',
+              image: 'https://kabcreativelab.com/images/icon.png',
               description: 'Professional video production, branding, and creative services in Ethiopia',
               address: {
                 '@type': 'PostalAddress',
