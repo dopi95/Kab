@@ -54,7 +54,7 @@ export default function ContactSection() {
   };
 
   const contactInfo = [
-    { icon: FaEnvelope, label: 'Email', value: 'Kabcreativelab@gmail.com', href: 'mailto:Kabcreativelab@gmail.com' },
+    { icon: FaEnvelope, label: 'Email', value: 'kab@kabcreativelab.com', href: 'mailto:kab@kabcreativelab.com' },
     { icon: FaPhone, label: 'Phone', value: '+251 983 101 000', href: 'tel:+251983101000' },
     { icon: FaMapMarkerAlt, label: 'Location', value: 'Addis Ababa, Ethiopia', href: '#' },
   ];

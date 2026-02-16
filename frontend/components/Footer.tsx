@@ -101,7 +101,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3 text-gray-400 text-sm group">
                 <FaEnvelope className="text-[#C4A86D] flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <a href="mailto:Kabcreativelab@gmail.com" className="hover:text-[#C4A86D] transition-colors">Kabcreativelab@gmail.com</a>
+                <a href="mailto:kab@kabcreativelab.com" className="hover:text-[#C4A86D] transition-colors">kab@kabcreativelab.com</a>
               </li>
               <li className="flex items-center gap-3 text-gray-400 text-sm group">
                 <FaWhatsapp className="text-[#C4A86D] flex-shrink-0 group-hover:scale-110 transition-transform" />
