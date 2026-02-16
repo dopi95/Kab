@@ -20,7 +20,7 @@ export default function UserSidebar({ user }: SidebarProps) {
   };
 
   const menuItems = [
-    { icon: FaChartLine, label: 'Dashboard', path: '/user' },
+    { icon: FaChartLine, label: 'My Dashboard', path: '/user' },
     { icon: FaUser, label: 'My Profile', path: '/user/profile' },
     { icon: FaFolderOpen, label: 'My Assets', path: '/user/my-assets' },
   ];
@@ -62,7 +62,7 @@ export default function UserSidebar({ user }: SidebarProps) {
               <Image src="/assets/logo.png" alt="Logo" fill className="object-contain" />
             </div>
             <h1 className="text-lg font-bold bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent">
-              User Panel
+              VIP Panel
             </h1>
           </div>
         </div>
