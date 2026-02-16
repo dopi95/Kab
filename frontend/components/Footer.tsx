@@ -113,20 +113,9 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-700 pt-8 mt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm text-center md:text-left">
+          <div className="flex justify-center items-center">
+            <p className="text-gray-400 text-sm text-center">
               © {new Date().getFullYear()} Kab Creative Lab. All rights reserved.
-            </p>
-            <p className="text-gray-400 text-sm">
-              Developed by{' '}
-              <a 
-                href="https://t.me/ChainTech_6" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-[#C4A86D] hover:text-[#A97E50] font-semibold transition-colors"
-              >
-                Chain Tech
-              </a>
             </p>
           </div>
         </div>

@@ -32,10 +32,10 @@ export default function AnimatedHero() {
       <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20 relative z-10 h-full flex items-center">
         <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center w-full">
           <div className="text-center md:text-left animate-slideInLeft order-2 md:order-1">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-gray-900 dark:text-white mb-3 sm:mb-4 md:mb-6 leading-tight">
-              <span className="inline-block animate-bounce">K</span>
-              <span className="inline-block animate-bounce" style={{ animationDelay: '0.1s' }}>a</span>
-              <span className="inline-block animate-bounce" style={{ animationDelay: '0.2s' }}>b</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-3 sm:mb-4 md:mb-6 leading-tight">
+              <span className="inline-block animate-bounce bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent">K</span>
+              <span className="inline-block animate-bounce bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent" style={{ animationDelay: '0.1s' }}>a</span>
+              <span className="inline-block animate-bounce bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent" style={{ animationDelay: '0.2s' }}>b</span>
               <br />
               <span className="bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent animate-pulse">Creative Lab</span>
             </h1>

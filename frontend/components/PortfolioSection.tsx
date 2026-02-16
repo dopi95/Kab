@@ -161,10 +161,10 @@ export default function PortfolioSection() {
 
           {/* Text in center - appears after characters meet */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center animate-text-appear px-4">
-            <p className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-white drop-shadow-lg">
+            <p className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-white drop-shadow-lg mb-2">
               Let's see our
             </p>
-            <p className="text-2xl md:text-3xl lg:text-5xl font-black bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent drop-shadow-lg">
+            <p className="text-2xl md:text-3xl lg:text-5xl font-black bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent drop-shadow-lg pb-2">
               Projects
             </p>
           </div>
