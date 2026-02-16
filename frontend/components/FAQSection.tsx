@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
+import Spinner from './Spinner';
 
 interface FAQ {
   _id: string;
@@ -14,6 +15,7 @@ interface FAQ {
 export default function FAQSection() {
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFAQs = async () => {
@@ -25,6 +27,8 @@ export default function FAQSection() {
         }
       } catch (error) {
         console.error('Failed to fetch FAQs:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchFAQs();
@@ -120,6 +124,12 @@ export default function FAQSection() {
             </p>
 
             <div className="space-y-4">
+              {loading ? (
+                <div className="flex justify-center py-10">
+                  <Spinner size="md" />
+                </div>
+              ) : (
+              <>
               {faqs.map((faq, index) => (
                 <div
                   key={index}
@@ -149,6 +159,8 @@ export default function FAQSection() {
                   </div>
                 </div>
               ))}
+              </>
+              )}
             </div>
           </div>
         </div>

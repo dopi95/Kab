@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { FaVideo, FaPalette, FaRobot, FaRocket, FaBullseye, FaUsers } from 'react-icons/fa';
+import Spinner from './Spinner';
 
 export default function AboutSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,6 +18,8 @@ export default function AboutSection() {
         setContent(data.content || 'Kab Creative Lab is a creative studio focused on helping brands communicate clearly, look premium, and convert attention into results.\nWe specialize in video production, visual branding, and AI-powered content solutions designed for modern businesses and digital platforms.\n\nKab was built with one principle: creative work must drive real outcomes, not just look good. Every project is approached with strategy first, visuals second, and performance always in mind.\n\nWe work with individuals, startups, and companies that want high-quality content without unnecessary complexity. From concept to final delivery, Kab Creative Lab provides streamlined execution, fast turnaround, and consistent quality.');
       } catch (error) {
         setContent('Kab Creative Lab is a creative studio focused on helping brands communicate clearly, look premium, and convert attention into results.\nWe specialize in video production, visual branding, and AI-powered content solutions designed for modern businesses and digital platforms.\n\nKab was built with one principle: creative work must drive real outcomes, not just look good. Every project is approached with strategy first, visuals second, and performance always in mind.\n\nWe work with individuals, startups, and companies that want high-quality content without unnecessary complexity. From concept to final delivery, Kab Creative Lab provides streamlined execution, fast turnaround, and consistent quality.');
+      } finally {
+        setLoading(false);
       }
     };
     fetchAbout();
@@ -52,6 +56,11 @@ export default function AboutSection() {
         </div>
 
         <div className="max-w-5xl mx-auto">
+          {loading ? (
+            <div className="flex justify-center py-20">
+              <Spinner size="lg" />
+            </div>
+          ) : (
           <div className={`transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="space-y-8 text-gray-700 dark:text-gray-300 text-base sm:text-lg md:text-xl leading-relaxed text-center md:text-left">
               {content.split('\n\n').map((paragraph, index) => (
@@ -105,6 +114,7 @@ export default function AboutSection() {
               </div>
             </div>
           </div>
+          )}
         </div>
       </div>
     </section>

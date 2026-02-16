@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FaPlus, FaEdit, FaTrash, FaVideo, FaPalette, FaRobot, FaCamera, FaBullhorn, FaCode, FaCog, FaLaptopCode, FaMobileAlt, FaChartLine, FaTimes, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 import AdminLayout from '@/components/AdminLayout';
+import Spinner from '@/components/Spinner';
 
 interface Service {
   _id: string;
@@ -157,10 +158,7 @@ export default function AdminServicesPage() {
     return (
       <AdminLayout>
         <div className="flex justify-center items-center h-screen">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-[#A97E50] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-xl text-gray-600 dark:text-gray-400">Loading...</p>
-          </div>
+          <Spinner size="lg" />
         </div>
       </AdminLayout>
     );

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { FaVideo, FaPalette, FaRobot, FaCamera, FaBullhorn, FaCode, FaCog, FaLaptopCode, FaMobileAlt, FaChartLine } from 'react-icons/fa';
+import Spinner from './Spinner';
 
 interface Service {
   _id: string;
@@ -24,6 +25,7 @@ export default function ServicesSection() {
   const [activeService, setActiveService] = useState(0);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,6 +39,8 @@ export default function ServicesSection() {
       setServices(data);
     } catch (error) {
       console.error('Error fetching services:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,7 +90,11 @@ export default function ServicesSection() {
           <div className="w-24 h-1 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] mx-auto rounded-full"></div>
         </div>
 
-        {/* Mobile Layout */}
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <Spinner size="lg" />
+          </div>
+        ) : (/* Mobile Layout */}
         <div className="lg:hidden">
           <div className="relative">
             {/* Character - Mobile */}
@@ -357,6 +365,7 @@ export default function ServicesSection() {
             </div>
           </div>
         </div>
+        )}
       </div>
 
       <style jsx>{`

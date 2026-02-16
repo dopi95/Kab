@@ -15,7 +15,9 @@ import faqRoutes from './routes/faqRoutes';
 import assetRoutes from './routes/assetRoutes';
 import founderRoutes from './routes/founderRoutes';
 import portfolioRoutes from './routes/portfolioRoutes';
+import healthRoutes from './routes/healthRoutes';
 import { errorHandler, notFound } from './middleware/errorHandler';
+import { startKeepAlive } from './services/keepAlive';
 
 // Load environment variables FIRST
 dotenv.config();
@@ -48,6 +50,7 @@ app.use('/api/faqs', faqRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/api/founder', founderRoutes);
 app.use('/api/portfolio', portfolioRoutes);
+app.use('/api', healthRoutes);
 
 // Error handling
 app.use(notFound);
@@ -55,4 +58,5 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  startKeepAlive();
 });

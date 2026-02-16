@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
+import KeepAliveInit from '@/components/KeepAliveInit'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
@@ -32,6 +33,7 @@ export default function RootLayout({
         }} />
       </head>
       <body className="antialiased bg-white dark:bg-[#171817] transition-colors duration-300">
+        <KeepAliveInit />
         <Header />
         {children}
       </body>
