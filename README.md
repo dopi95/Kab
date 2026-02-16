@@ -1,6 +1,7 @@
 <div align="center">
   <img src="frontend/public/assets/logo.png" alt="Kab Creative Lab Logo" width="200"/>
   <h1>Kab Creative Lab</h1>
+  <p><strong>🌐 Live:</strong> <a href="https://kabcreativelab.com">kabcreativelab.com</a></p>
 </div>
 
 A full-stack web application for managing creative portfolios, projects, and client communications.
