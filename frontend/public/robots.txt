@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /user/
+Disallow: /signin
+Disallow: /api/
+
+Sitemap: https://kabcreativelab.com/sitemap.xml
