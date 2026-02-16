@@ -23,6 +23,9 @@ export default function Footer() {
               Transforming ideas into stunning visual experiences. Your creative partner for content creation, video production, and branding.
             </p>
             <div className="flex gap-3">
+              <a href="mailto:kab@kabcreativelab.com" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                <FaEnvelope />
+              </a>
               <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
                 <FaFacebook />
               </a>
