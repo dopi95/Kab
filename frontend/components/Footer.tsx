@@ -29,7 +29,7 @@ export default function Footer() {
               <a href="https://www.facebook.com/share/1RWimTw4mU/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
                 <FaFacebook />
               </a>
-              <a href="https://www.instagram.com/kabcreativelab/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+              <a href="instagram://user?username=kabcreativelab" onClick={(e) => { if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) { e.preventDefault(); window.open('https://www.instagram.com/kabcreativelab/', '_blank'); } }} className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
                 <FaInstagram />
               </a>
               <a href="https://www.tiktok.com/@kab.creativelab?_r=1&_t=ZS-93zyvKezp81" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
