@@ -235,7 +235,7 @@ export default function PortfolioPage() {
                       <FaWhatsapp size={20} className="md:w-6 md:h-6" />
                     </a>
                     <a
-                      href="https://instagram.com/yared_abebayehu"
+                      href="https://www.instagram.com/yared_abebayehu/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-12 h-12 md:w-14 md:h-14 bg-white/20 hover:bg-white hover:text-[#A97E50] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 animate-bounce-in"
