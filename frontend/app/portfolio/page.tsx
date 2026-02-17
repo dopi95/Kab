@@ -218,16 +218,40 @@ export default function PortfolioPage() {
                   
                   {/* Social Icons */}
                   <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 md:mb-12">
-                    {[FaEnvelope, FaWhatsapp, FaInstagram, FaLinkedin].map((Icon, idx) => (
-                      <a
-                        key={idx}
-                        href="#"
-                        className="w-12 h-12 md:w-14 md:h-14 bg-white/20 hover:bg-white hover:text-[#A97E50] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 animate-bounce-in"
-                        style={{ animationDelay: `${idx * 100 + 400}ms` }}
-                      >
-                        <Icon size={20} className="md:w-6 md:h-6" />
-                      </a>
-                    ))}
+                    <a
+                      href="mailto:Kab@kabcreativelab.com"
+                      className="w-12 h-12 md:w-14 md:h-14 bg-white/20 hover:bg-white hover:text-[#A97E50] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 animate-bounce-in"
+                      style={{ animationDelay: '400ms' }}
+                    >
+                      <FaEnvelope size={20} className="md:w-6 md:h-6" />
+                    </a>
+                    <a
+                      href="https://wa.me/251983101000"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 md:w-14 md:h-14 bg-white/20 hover:bg-white hover:text-[#A97E50] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 animate-bounce-in"
+                      style={{ animationDelay: '500ms' }}
+                    >
+                      <FaWhatsapp size={20} className="md:w-6 md:h-6" />
+                    </a>
+                    <a
+                      href="https://www.instagram.com/yared_abebayehu?igsh=ZGcwa3NrZGR0aHVs"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 md:w-14 md:h-14 bg-white/20 hover:bg-white hover:text-[#A97E50] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 animate-bounce-in"
+                      style={{ animationDelay: '600ms' }}
+                    >
+                      <FaInstagram size={20} className="md:w-6 md:h-6" />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/yaredabebayehu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 md:w-14 md:h-14 bg-white/20 hover:bg-white hover:text-[#A97E50] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 animate-bounce-in"
+                      style={{ animationDelay: '700ms' }}
+                    >
+                      <FaLinkedin size={20} className="md:w-6 md:h-6" />
+                    </a>
                   </div>
 
                   {/* Overlapping Images */}

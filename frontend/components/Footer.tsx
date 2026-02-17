@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa';
+import { FaFacebook, FaTiktok, FaInstagram, FaLinkedin, FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -26,17 +26,14 @@ export default function Footer() {
               <a href="mailto:kab@kabcreativelab.com" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
                 <FaEnvelope />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+              <a href="https://www.facebook.com/share/1RWimTw4mU/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
                 <FaFacebook />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
-                <FaTwitter />
-              </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+              <a href="https://www.instagram.com/kabcreativelab?utm_source=qr&igsh=MXd6MWpvcjd1OXZ1Zg==" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
                 <FaInstagram />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
-                <FaLinkedin />
+              <a href="https://www.tiktok.com/@kab.creativelab?_r=1&_t=ZS-93zyvKezp81" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-[#A97E50] hover:to-[#C4A86D] rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                <FaTiktok />
               </a>
             </div>
           </div>
