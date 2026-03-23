@@ -53,7 +53,6 @@ export default function PortfolioPage() {
   const [expInView, setExpInView] = useState(false);
   const [worksInView, setWorksInView] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
   
   const heroRef = useRef<HTMLElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
@@ -72,7 +71,6 @@ export default function PortfolioPage() {
           if (entry.isIntersecting) {
             if (entry.target === heroRef.current) {
               setHeroInView(true);
-              setTimeout(() => setIsVisible(true), 2000);
             }
             if (entry.target === aboutRef.current) setAboutInView(true);
             if (entry.target === skillsRef.current) setSkillsInView(true);
@@ -94,12 +92,11 @@ export default function PortfolioPage() {
   }, []);
 
   useEffect(() => {
-    if (!isVisible) return;
     const interval = setInterval(() => {
       setActiveImage((prev) => (prev + 1) % 3);
     }, 2000);
     return () => clearInterval(interval);
-  }, [isVisible]);
+  }, []);
 
   useEffect(() => {
     if (!selectedProject || !isAutoPlay || !selectedProject.mediaFiles || selectedProject.mediaFiles.length <= 1) return;
@@ -158,57 +155,9 @@ export default function PortfolioPage() {
       <main className="pt-20 overflow-x-hidden">
         {/* Hero Section with Overlapping Images */}
         <section ref={heroRef} className="flex items-center justify-center bg-gradient-to-br from-[#A97E50] to-[#C4A86D] relative overflow-hidden py-4 md:py-6 mt-8 pb-20 md:pb-32">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl animate-float"></div>
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-white rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-          </div>
-
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-6xl mx-auto">
-              {/* Animated Characters with Name & Social Icons */}
               <div className="relative mb-0">
-                {/* Animated Characters */}
-                <div className="flex items-center justify-between mb-3 md:mb-4">
-                  <div className="animate-walk-hero">
-                    <svg viewBox="0 0 200 320" className="w-16 h-24 md:w-20 md:h-32 drop-shadow-xl">
-                      <defs>
-                        <linearGradient id="skinHero" x1="0%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" style={{ stopColor: '#FFD4A3' }} />
-                          <stop offset="100%" style={{ stopColor: '#FFBE8F' }} />
-                        </linearGradient>
-                      </defs>
-                      <g className="animate-body-bounce">
-                        <rect x="70" y="160" width="60" height="90" rx="12" fill="white" opacity="0.9" />
-                        <ellipse cx="55" cy="175" rx="16" ry="40" fill="white" opacity="0.9" className="animate-arm-swing-left" style={{ transformOrigin: '55px 165px' }} />
-                        <ellipse cx="145" cy="175" rx="16" ry="40" fill="white" opacity="0.9" className="animate-arm-swing-right" style={{ transformOrigin: '145px 165px' }} />
-                        <rect x="78" y="245" width="20" height="50" rx="10" fill="white" opacity="0.8" className="animate-leg-walk-left" style={{ transformOrigin: '88px 245px' }} />
-                        <rect x="102" y="245" width="20" height="50" rx="10" fill="white" opacity="0.8" className="animate-leg-walk-right" style={{ transformOrigin: '112px 245px' }} />
-                        <circle cx="100" cy="110" r="48" fill="url(#skinHero)" />
-                        <ellipse cx="100" cy="80" rx="52" ry="40" fill="#654321" />
-                        <circle cx="85" cy="105" r="5" fill="#333" />
-                        <circle cx="115" cy="105" r="5" fill="#333" />
-                        <path d="M 88 125 Q 100 130 112 125" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" />
-                      </g>
-                    </svg>
-                  </div>
-                  <div className="animate-walk-hero-reverse">
-                    <svg viewBox="0 0 200 320" className="w-16 h-24 md:w-20 md:h-32 drop-shadow-xl scale-x-[-1]">
-                      <g className="animate-body-bounce-delayed">
-                        <rect x="70" y="160" width="60" height="90" rx="12" fill="white" opacity="0.9" />
-                        <ellipse cx="55" cy="175" rx="16" ry="40" fill="white" opacity="0.9" className="animate-arm-swing-right" style={{ transformOrigin: '55px 165px' }} />
-                        <ellipse cx="145" cy="175" rx="16" ry="40" fill="white" opacity="0.9" className="animate-arm-swing-left" style={{ transformOrigin: '145px 165px' }} />
-                        <rect x="78" y="245" width="20" height="50" rx="10" fill="white" opacity="0.8" className="animate-leg-walk-right" style={{ transformOrigin: '88px 245px' }} />
-                        <rect x="102" y="245" width="20" height="50" rx="10" fill="white" opacity="0.8" className="animate-leg-walk-left" style={{ transformOrigin: '112px 245px' }} />
-                        <circle cx="100" cy="110" r="48" fill="url(#skinHero)" />
-                        <ellipse cx="100" cy="80" rx="52" ry="40" fill="#8B4513" />
-                        <circle cx="85" cy="105" r="5" fill="#333" />
-                        <circle cx="115" cy="105" r="5" fill="#333" />
-                        <path d="M 88 125 Q 100 130 112 125" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" />
-                      </g>
-                    </svg>
-                  </div>
-                </div>
-
                 {/* Name & Social Icons */}
                 <div className={`text-center transition-all duration-1000 mt-6 ${heroInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
                   <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-2 md:mb-3 animate-fade-in">
@@ -628,77 +577,10 @@ export default function PortfolioPage() {
       <Footer />
 
       <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
-        }
-        @keyframes bounce-in {
-          0% { opacity: 0; transform: scale(0); }
-          50% { transform: scale(1.1); }
-          100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes slide-in-left {
-          0% { opacity: 0; transform: translateX(-100px) rotate(-8deg); }
-          100% { opacity: 1; transform: translateX(0) rotate(-8deg); }
-        }
-        @keyframes slide-in-right {
-          0% { opacity: 0; transform: translateX(100px) rotate(8deg); }
-          100% { opacity: 1; transform: translateX(0) rotate(8deg); }
-        }
-        @keyframes slide-in-up {
-          0% { opacity: 0; transform: translate(-50%, 50px) rotate(4deg); }
-          100% { opacity: 1; transform: translate(-50%, 0) rotate(4deg); }
-        }
-        @keyframes slide-in-right {
-          0% { opacity: 0; transform: translateX(100%); }
-          100% { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes walk-hero {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(100vw); }
-        }
-        @keyframes walk-hero-reverse {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-100vw); }
-        }
-        @keyframes body-bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-        @keyframes body-bounce-delayed {
-          0%, 100% { transform: translateY(-8px); }
-          50% { transform: translateY(0); }
-        }
-        @keyframes arm-swing-left {
-          0%, 100% { transform: rotate(-35deg); }
-          50% { transform: rotate(25deg); }
-        }
-        @keyframes arm-swing-right {
-          0%, 100% { transform: rotate(25deg); }
-          50% { transform: rotate(-35deg); }
-        }
-        @keyframes leg-walk-left {
-          0%, 100% { transform: rotate(-25deg); }
-          50% { transform: rotate(25deg); }
-        }
-        @keyframes leg-walk-right {
-          0%, 100% { transform: rotate(25deg); }
-          50% { transform: rotate(-25deg); }
-        }
-        .animate-float { animation: float 6s ease-in-out infinite; }
         .animate-bounce-in { animation: bounce-in 0.6s ease-out forwards; }
         .animate-slide-in-left { animation: slide-in-left 0.8s ease-out forwards; }
         .animate-slide-in-right { animation: slide-in-right 0.8s ease-out forwards; }
         .animate-slide-in-up { animation: slide-in-up 0.8s ease-out forwards; }
-        .animate-slide-in-right { animation: slide-in-right 0.5s ease-out; }
-        .animate-walk-hero { animation: walk-hero 15s linear infinite; }
-        .animate-walk-hero-reverse { animation: walk-hero-reverse 15s linear infinite; }
-        .animate-body-bounce { animation: body-bounce 0.6s ease-in-out infinite; }
-        .animate-body-bounce-delayed { animation: body-bounce-delayed 0.6s ease-in-out infinite; }
-        .animate-arm-swing-left { animation: arm-swing-left 0.6s ease-in-out infinite; }
-        .animate-arm-swing-right { animation: arm-swing-right 0.6s ease-in-out infinite; }
-        .animate-leg-walk-left { animation: leg-walk-left 0.6s ease-in-out infinite; }
-        .animate-leg-walk-right { animation: leg-walk-right 0.6s ease-in-out infinite; }
       `}</style>
     </>
   );

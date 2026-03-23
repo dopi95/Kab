@@ -88,88 +88,6 @@ export default function PortfolioSection() {
           <div className="w-20 h-1 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] mx-auto rounded-full mt-3"></div>
         </div>
 
-        {/* Animated Characters with Movement */}
-        <div className={`relative h-48 md:h-64 mb-10 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-          {/* Character 1 - Walking from left */}
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 animate-walk-from-left">
-            <svg viewBox="0 0 200 320" className="w-20 h-32 md:w-32 md:h-48 lg:w-40 lg:h-60 drop-shadow-2xl">
-              <defs>
-                <linearGradient id="skin1" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: '#FFD4A3' }} />
-                  <stop offset="100%" style={{ stopColor: '#FFBE8F' }} />
-                </linearGradient>
-                <linearGradient id="brand1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: '#A97E50' }} />
-                  <stop offset="100%" style={{ stopColor: '#C4A86D' }} />
-                </linearGradient>
-                <filter id="shadow">
-                  <feDropShadow dx="0" dy="4" stdDeviation="3" floodOpacity="0.3"/>
-                </filter>
-              </defs>
-              <g filter="url(#shadow)" className="animate-body-bounce">
-                <rect x="65" y="150" width="70" height="100" rx="12" fill="url(#brand1)" />
-                <ellipse cx="48" cy="170" rx="18" ry="45" fill="url(#brand1)" className="animate-arm-swing-left" style={{ transformOrigin: '48px 155px' }} />
-                <circle cx="36" cy="215" r="16" fill="url(#skin1)" />
-                <ellipse cx="152" cy="170" rx="18" ry="45" fill="url(#brand1)" className="animate-arm-swing-right" style={{ transformOrigin: '152px 155px' }} />
-                <circle cx="164" cy="215" r="16" fill="url(#skin1)" />
-                <rect x="75" y="245" width="24" height="60" rx="12" fill="#8B7355" className="animate-leg-walk-left" style={{ transformOrigin: '87px 245px' }} />
-                <ellipse cx="87" cy="310" rx="20" ry="12" fill="#C4A86D" />
-                <rect x="101" y="245" width="24" height="60" rx="12" fill="#8B7355" className="animate-leg-walk-right" style={{ transformOrigin: '113px 245px' }} />
-                <ellipse cx="113" cy="310" rx="20" ry="12" fill="#C4A86D" />
-                <circle cx="100" cy="100" r="52" fill="url(#skin1)" />
-                <ellipse cx="100" cy="70" rx="56" ry="45" fill="#654321" />
-                <circle cx="70" cy="78" r="22" fill="#654321" />
-                <circle cx="130" cy="78" r="22" fill="#654321" />
-                <circle cx="83" cy="98" r="6" fill="#333" className="animate-eye-blink" />
-                <circle cx="80" cy="96" r="3" fill="white" />
-                <circle cx="117" cy="98" r="6" fill="#333" className="animate-eye-blink" />
-                <circle cx="114" cy="96" r="3" fill="white" />
-                <path d="M 85 118 Q 100 128 115 118" stroke="#A97E50" strokeWidth="3" fill="none" strokeLinecap="round" />
-                <circle cx="70" cy="108" r="8" fill="#FFB6C1" opacity="0.7" />
-                <circle cx="130" cy="108" r="8" fill="#FFB6C1" opacity="0.7" />
-              </g>
-            </svg>
-          </div>
-
-          {/* Character 2 - Walking from right */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 animate-walk-from-right">
-            <svg viewBox="0 0 200 320" className="w-20 h-32 md:w-32 md:h-48 lg:w-40 lg:h-60 drop-shadow-2xl scale-x-[-1]">
-              <g filter="url(#shadow)" className="animate-body-bounce-delayed">
-                <rect x="65" y="150" width="70" height="100" rx="12" fill="url(#brand1)" />
-                <ellipse cx="48" cy="170" rx="18" ry="45" fill="url(#brand1)" className="animate-arm-swing-right" style={{ transformOrigin: '48px 155px' }} />
-                <circle cx="36" cy="215" r="16" fill="url(#skin1)" />
-                <ellipse cx="152" cy="170" rx="18" ry="45" fill="url(#brand1)" className="animate-arm-swing-left" style={{ transformOrigin: '152px 155px' }} />
-                <circle cx="164" cy="215" r="16" fill="url(#skin1)" />
-                <rect x="75" y="245" width="24" height="60" rx="12" fill="#8B7355" className="animate-leg-walk-right" style={{ transformOrigin: '87px 245px' }} />
-                <ellipse cx="87" cy="310" rx="20" ry="12" fill="#C4A86D" />
-                <rect x="101" y="245" width="24" height="60" rx="12" fill="#8B7355" className="animate-leg-walk-left" style={{ transformOrigin: '113px 245px' }} />
-                <ellipse cx="113" cy="310" rx="20" ry="12" fill="#C4A86D" />
-                <circle cx="100" cy="100" r="52" fill="url(#skin1)" />
-                <ellipse cx="100" cy="70" rx="56" ry="45" fill="#8B4513" />
-                <circle cx="70" cy="78" r="22" fill="#8B4513" />
-                <circle cx="130" cy="78" r="22" fill="#8B4513" />
-                <circle cx="83" cy="98" r="6" fill="#333" className="animate-eye-blink" />
-                <circle cx="80" cy="96" r="3" fill="white" />
-                <circle cx="117" cy="98" r="6" fill="#333" className="animate-eye-blink" />
-                <circle cx="114" cy="96" r="3" fill="white" />
-                <path d="M 85 118 Q 100 128 115 118" stroke="#A97E50" strokeWidth="3" fill="none" strokeLinecap="round" />
-                <circle cx="70" cy="108" r="8" fill="#FFB6C1" opacity="0.7" />
-                <circle cx="130" cy="108" r="8" fill="#FFB6C1" opacity="0.7" />
-              </g>
-            </svg>
-          </div>
-
-          {/* Text in center - appears after characters meet */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center animate-text-appear px-4">
-            <p className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-white drop-shadow-lg mb-2">
-              Let's see our
-            </p>
-            <p className="text-2xl md:text-3xl lg:text-5xl font-black bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent drop-shadow-lg pb-2">
-              Projects
-            </p>
-          </div>
-        </div>
-
         {/* Filter Buttons */}
         <div className={`flex flex-wrap justify-center gap-3 mb-12 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {categories.map((cat) => (
@@ -300,58 +218,7 @@ export default function PortfolioSection() {
           </div>
         </div>
       )}
-      <style jsx>{`
-        @keyframes walk-from-left {
-          0% { transform: translateX(-250%) translateY(-50%); }
-          100% { transform: translateX(0) translateY(-50%); }
-        }
-        @keyframes walk-from-right {
-          0% { transform: translateX(250%) translateY(-50%); }
-          100% { transform: translateX(0) translateY(-50%); }
-        }
-        @keyframes text-appear {
-          0%, 65% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(-5deg); }
-          100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-        }
-        @keyframes body-bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-        @keyframes body-bounce-delayed {
-          0%, 100% { transform: translateY(-8px); }
-          50% { transform: translateY(0); }
-        }
-        @keyframes arm-swing-left {
-          0%, 100% { transform: rotate(-35deg); }
-          50% { transform: rotate(25deg); }
-        }
-        @keyframes arm-swing-right {
-          0%, 100% { transform: rotate(25deg); }
-          50% { transform: rotate(-35deg); }
-        }
-        @keyframes leg-walk-left {
-          0%, 100% { transform: rotate(-25deg); }
-          50% { transform: rotate(25deg); }
-        }
-        @keyframes leg-walk-right {
-          0%, 100% { transform: rotate(25deg); }
-          50% { transform: rotate(-25deg); }
-        }
-        @keyframes eye-blink {
-          0%, 92%, 100% { transform: scaleY(1); }
-          95% { transform: scaleY(0.1); }
-        }
-        .animate-walk-from-left { animation: walk-from-left 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .animate-walk-from-right { animation: walk-from-right 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .animate-text-appear { animation: text-appear 3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-        .animate-body-bounce { animation: body-bounce 0.6s ease-in-out infinite; }
-        .animate-body-bounce-delayed { animation: body-bounce-delayed 0.6s ease-in-out infinite; }
-        .animate-arm-swing-left { animation: arm-swing-left 0.6s ease-in-out infinite; }
-        .animate-arm-swing-right { animation: arm-swing-right 0.6s ease-in-out infinite; }
-        .animate-leg-walk-left { animation: leg-walk-left 0.6s ease-in-out infinite; }
-        .animate-leg-walk-right { animation: leg-walk-right 0.6s ease-in-out infinite; }
-        .animate-eye-blink { animation: eye-blink 5s ease-in-out infinite; }
-      `}</style>
+      <style jsx>{``}</style>
     </section>
   );
 }
