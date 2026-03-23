@@ -141,15 +141,15 @@ export default function PortfolioPage() {
     }
   };
 
-  const skills = [
+  const defaultSkills = [
     'Creative Direction', 'Brand Strategy', 'UI/UX Design', 'Video Production',
     'Photography', 'Digital Marketing', 'Content Creation', 'Project Management'
   ];
 
-  const experiences = [
-    { title: 'Founder & Creative Director', company: 'Kab Creative Lab', period: '2020 - Present', desc: 'Leading creative projects and building innovative solutions for clients worldwide.' },
-    { title: 'Senior Designer', company: 'Creative Agency', period: '2017 - 2020', desc: 'Developed creative strategies and managed design teams for major brands.' },
-    { title: 'Designer', company: 'Digital Studio', period: '2015 - 2017', desc: 'Created compelling visual designs and brand identities.' }
+  const defaultExperiences = [
+    { title: 'Founder & Creative Director', company: 'Kab Creative Lab', period: '2020 - Present', description: 'Leading creative projects and building innovative solutions for clients worldwide.' },
+    { title: 'Senior Designer', company: 'Creative Agency', period: '2017 - 2020', description: 'Developed creative strategies and managed design teams for major brands.' },
+    { title: 'Designer', company: 'Digital Studio', period: '2015 - 2017', description: 'Created compelling visual designs and brand identities.' }
   ];
 
   return (
@@ -360,7 +360,7 @@ export default function PortfolioPage() {
                 Skills & <span className="bg-gradient-to-r from-[#A97E50] to-[#C4A86D] bg-clip-text text-transparent">Expertise</span>
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {(portfolio?.skills && portfolio.skills.length > 0 ? portfolio.skills : skills).map((skill, idx) => (
+                {(portfolio?.skills && portfolio.skills.length > 0 ? portfolio.skills : defaultSkills).map((skill, idx) => (
                   <div
                     key={idx}
                     className={`group relative bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:-translate-y-3 overflow-hidden ${
@@ -392,7 +392,10 @@ export default function PortfolioPage() {
               </h2>
               <div className="relative">
                 <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-[#A97E50] via-[#C4A86D] to-[#A97E50] animate-pulse"></div>
-                {(portfolio?.experiences && portfolio.experiences.length > 0 ? portfolio.experiences : experiences).map((exp, idx) => (
+                {(portfolio?.experiences && portfolio.experiences.length > 0
+                  ? [...portfolio.experiences].sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0))
+                  : defaultExperiences
+                ).map((exp, idx) => (
                   <div
                     key={idx}
                     className={`relative pl-20 pb-12 transition-all duration-1000 ${expInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}
@@ -418,7 +421,7 @@ export default function PortfolioPage() {
                           </svg>
                           {exp.period}
                         </p>
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{(exp as any).description || (exp as any).desc}</p>
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{exp.description}</p>
                       </div>
                     </div>
                   </div>

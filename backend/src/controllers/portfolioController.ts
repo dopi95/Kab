@@ -50,11 +50,12 @@ export const updateSkills = async (req: Request, res: Response) => {
 export const updateExperiences = async (req: Request, res: Response) => {
   try {
     const { experiences } = req.body;
+    const sorted = [...experiences].sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0));
     let portfolio = await Portfolio.findOne();
     if (!portfolio) {
-      portfolio = await Portfolio.create({ experiences });
+      portfolio = await Portfolio.create({ experiences: sorted });
     } else {
-      portfolio.experiences = experiences;
+      portfolio.experiences = sorted;
       await portfolio.save();
     }
     res.json({ success: true, data: portfolio });

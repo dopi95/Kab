@@ -10,6 +10,7 @@ export interface IPortfolio extends Document {
     company: string;
     period: string;
     description: string;
+    order: number;
   }[];
   sampleWorks: {
     title: string;
@@ -46,6 +47,7 @@ const PortfolioSchema: Schema = new Schema(
           company: { type: String, required: true },
           period: { type: String, required: true },
           description: { type: String, required: true },
+          order: { type: Number, default: 0 },
         },
       ],
       default: [],

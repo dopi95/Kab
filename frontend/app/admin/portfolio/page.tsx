@@ -14,6 +14,7 @@ interface Portfolio {
     company: string;
     period: string;
     description: string;
+    order: number;
   }[];
   sampleWorks: {
     title: string;
@@ -22,6 +23,91 @@ interface Portfolio {
     mediaUrls?: string[];
     youtubeUrl?: string;
   }[];
+}
+
+function AddExperienceForm({ onAdd }: { onAdd: (exp: { title: string; company: string; period: string; description: string; order: number }) => void }) {
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({ title: '', company: '', period: '', description: '', order: 0 });
+
+  const handleSubmit = () => {
+    if (!form.title || !form.company || !form.period || !form.description) return;
+    onAdd(form);
+    setForm({ title: '', company: '', period: '', description: '', order: 0 });
+    setOpen(false);
+  };
+
+  if (!open) {
+    return (
+      <button
+        onClick={() => setOpen(true)}
+        className="w-full px-4 py-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-500 dark:text-gray-400 hover:border-[#A97E50] hover:text-[#A97E50] hover:bg-[#A97E50]/5 transition-all flex items-center justify-center gap-2 font-semibold"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+        </svg>
+        Add Experience
+      </button>
+    );
+  }
+
+  return (
+    <div className="p-4 md:p-6 border-2 border-[#A97E50] rounded-xl space-y-3 md:space-y-4 animate-slide-in">
+      <h3 className="font-semibold text-gray-900 dark:text-white">New Experience</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        <input
+          type="number"
+          value={form.order}
+          onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
+          className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
+          placeholder="Order (1, 2, 3...)"
+        />
+        <input
+          type="text"
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
+          className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white font-semibold transition-all"
+          placeholder="Job Title"
+        />
+      </div>
+      <div className="grid md:grid-cols-2 gap-4">
+        <input
+          type="text"
+          value={form.company}
+          onChange={(e) => setForm({ ...form, company: e.target.value })}
+          className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
+          placeholder="Company"
+        />
+        <input
+          type="text"
+          value={form.period}
+          onChange={(e) => setForm({ ...form, period: e.target.value })}
+          className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
+          placeholder="Period (e.g., 2020 - Present)"
+        />
+      </div>
+      <textarea
+        value={form.description}
+        onChange={(e) => setForm({ ...form, description: e.target.value })}
+        rows={3}
+        className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
+        placeholder="Description"
+      />
+      <div className="flex gap-2">
+        <button
+          onClick={handleSubmit}
+          className="flex-1 px-4 py-3 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white rounded-lg font-semibold hover:shadow-lg transition"
+        >
+          Add Experience
+        </button>
+        <button
+          onClick={() => { setOpen(false); setForm({ title: '', company: '', period: '', description: '', order: 0 }); }}
+          className="px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default function AdminPortfolioPage() {
@@ -34,6 +120,7 @@ export default function AdminPortfolioPage() {
   const [experiences, setExperiences] = useState<Portfolio['experiences']>([]);
   const [sampleWorks, setSampleWorks] = useState<Portfolio['sampleWorks']>([]);
   const [editingWork, setEditingWork] = useState<{ index: number; work: Portfolio['sampleWorks'][0] } | null>(null);
+  const [editingExp, setEditingExp] = useState<{ index: number; data: Portfolio['experiences'][0] } | null>(null);
   const [editMediaToRemove, setEditMediaToRemove] = useState<number[]>([]);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
@@ -78,10 +165,12 @@ export default function AdminPortfolioPage() {
       const data = await res.json();
       if (data.success) {
         setPortfolio(data.data);
-        setAboutText(data.data.aboutText);
-        setExperienceYears(data.data.experienceYears);
+        setAboutText(data.data.aboutText || '');
+        setExperienceYears(data.data.experienceYears || '10+');
         setSkills(data.data.skills || []);
-        setExperiences(data.data.experiences || []);
+        setExperiences(
+          (data.data.experiences || []).map(({ title, company, period, description, order }: any) => ({ title, company, period, description, order: order ?? 0 }))
+        );
         setSampleWorks(data.data.sampleWorks || []);
       }
     } catch (error) {
@@ -537,84 +626,187 @@ export default function AdminPortfolioPage() {
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 md:p-6">
               <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6">Experience</h2>
               <div className="space-y-4 md:space-y-6">
-                {experiences.map((exp, idx) => (
-                  <div key={idx} className="relative p-4 md:p-6 border-2 border-gray-300 dark:border-gray-600 rounded-xl space-y-3 md:space-y-4 hover:border-[#A97E50] transition-all animate-slide-in" style={{ animationDelay: `${idx * 100}ms` }}>
+                {experiences.length === 0 && (
+                  <p className="text-center text-gray-400 dark:text-gray-500 py-6">No experiences yet. Add one below.</p>
+                )}
+                {[...experiences].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).map((exp, idx) => (
+                  <div key={idx} className="relative p-4 md:p-6 border-2 border-gray-200 dark:border-gray-600 rounded-xl animate-slide-in hover:border-[#A97E50] transition-all" style={{ animationDelay: `${idx * 100}ms` }}>
                     <div className="absolute -left-2 md:-left-3 -top-2 md:-top-3 w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#A97E50] to-[#C4A86D] rounded-full flex items-center justify-center text-white font-bold shadow-lg text-sm md:text-base">
                       {idx + 1}
                     </div>
-                    <input
-                      type="text"
-                      value={exp.title}
-                      onChange={(e) => {
-                        const newExp = [...experiences];
-                        newExp[idx].title = e.target.value;
-                        setExperiences(newExp);
-                      }}
-                      className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white font-semibold transition-all"
-                      placeholder="Job Title"
-                    />
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        value={exp.company}
-                        onChange={(e) => {
-                          const newExp = [...experiences];
-                          newExp[idx].company = e.target.value;
-                          setExperiences(newExp);
-                        }}
-                        className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
-                        placeholder="Company"
-                      />
-                      <input
-                        type="text"
-                        value={exp.period}
-                        onChange={(e) => {
-                          const newExp = [...experiences];
-                          newExp[idx].period = e.target.value;
-                          setExperiences(newExp);
-                        }}
-                        className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
-                        placeholder="Period (e.g., 2020 - Present)"
-                      />
-                    </div>
-                    <textarea
-                      value={exp.description}
-                      onChange={(e) => {
-                        const newExp = [...experiences];
-                        newExp[idx].description = e.target.value;
-                        setExperiences(newExp);
-                      }}
-                      rows={3}
-                      className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
-                      placeholder="Description"
-                    />
-                    <button
-                      onClick={() => setExperiences(experiences.filter((_, i) => i !== idx))}
-                      className="w-full px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 hover:scale-[1.02] transition-all shadow-lg flex items-center justify-center gap-2 font-semibold"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                      Remove Experience
-                    </button>
+
+                    {editingExp?.index === idx ? (
+                      /* Edit form for this experience */
+                      <div className="space-y-3 md:space-y-4 mt-2">
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <input
+                            type="number"
+                            value={editingExp.data.order ?? 0}
+                            onChange={(e) => setEditingExp({ index: idx, data: { ...editingExp.data, order: parseInt(e.target.value) || 0 } })}
+                            className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
+                            placeholder="Order (1, 2, 3...)"
+                          />
+                          <input
+                            type="text"
+                            value={editingExp.data.title}
+                            onChange={(e) => setEditingExp({ index: idx, data: { ...editingExp.data, title: e.target.value } })}
+                            className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white font-semibold transition-all"
+                            placeholder="Job Title"
+                          />
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <input
+                            type="text"
+                            value={editingExp.data.company}
+                            onChange={(e) => setEditingExp({ index: idx, data: { ...editingExp.data, company: e.target.value } })}
+                            className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
+                            placeholder="Company"
+                          />
+                          <input
+                            type="text"
+                            value={editingExp.data.period}
+                            onChange={(e) => setEditingExp({ index: idx, data: { ...editingExp.data, period: e.target.value } })}
+                            className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
+                            placeholder="Period (e.g., 2020 - Present)"
+                          />
+                        </div>
+                        <textarea
+                          value={editingExp.data.description}
+                          onChange={(e) => setEditingExp({ index: idx, data: { ...editingExp.data, description: e.target.value } })}
+                          rows={3}
+                          className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white transition-all"
+                          placeholder="Description"
+                        />
+                        <div className="flex gap-2">
+                          <button
+                            onClick={async () => {
+                              const updated = [...experiences];
+                              updated[idx] = editingExp.data;
+                              setExperiences(updated);
+                              setEditingExp(null);
+                              try {
+                                const token = localStorage.getItem('token');
+                                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/portfolio/experiences`, {
+                                  method: 'PUT',
+                                  headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                                  body: JSON.stringify({ experiences: updated }),
+                                });
+                                const data = await res.json();
+                                if (data.success) {
+                                  setPortfolio(data.data);
+                                  setExperiences(
+                                    (data.data.experiences || []).map(({ title, company, period, description, order }: any) => ({ title, company, period, description, order: order ?? 0 }))
+                                  );
+                                  showToast('Experience updated successfully', 'success');
+                                } else {
+                                  showToast(data.message, 'error');
+                                }
+                              } catch {
+                                showToast('Failed to update experience', 'error');
+                              }
+                            }}
+                            className="flex-1 px-4 py-2 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white rounded-lg font-semibold hover:shadow-lg transition"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => setEditingExp(null)}
+                            className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      /* Read-only card view */
+                      <div className="mt-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-xs font-bold text-white bg-[#A97E50] rounded px-2 py-0.5">#{exp.order ?? 0}</span>
+                          <h3 className="font-bold text-gray-900 dark:text-white text-base md:text-lg">{exp.title || <span className="text-gray-400 italic">No title</span>}</h3>
+                        </div>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 mb-2">
+                          <span className="text-sm text-[#A97E50] font-semibold">{exp.company}</span>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">{exp.period}</span>
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{exp.description}</p>
+                        <div className="flex gap-2 mt-3">
+                          <button
+                            onClick={() => setEditingExp({ index: idx, data: { ...exp } })}
+                            className="flex-1 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-2 text-sm"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Edit
+                          </button>
+                          <button
+                            onClick={async () => {
+                              const updated = experiences.filter((_, i) => i !== idx);
+                              setExperiences(updated);
+                              try {
+                                const token = localStorage.getItem('token');
+                                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/portfolio/experiences`, {
+                                  method: 'PUT',
+                                  headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                                  body: JSON.stringify({ experiences: updated }),
+                                });
+                                const data = await res.json();
+                                if (data.success) {
+                                  setPortfolio(data.data);
+                                  setExperiences(
+                                    (data.data.experiences || []).map(({ title, company, period, description, order }: any) => ({ title, company, period, description, order: order ?? 0 }))
+                                  );
+                                  showToast('Experience removed', 'success');
+                                } else {
+                                  showToast(data.message, 'error');
+                                }
+                              } catch {
+                                showToast('Failed to remove experience', 'error');
+                              }
+                            }}
+                            className="flex-1 px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2 text-sm"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
-                <button
-                  onClick={() => setExperiences([...experiences, { title: '', company: '', period: '', description: '' }])}
-                  className="w-full px-4 py-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-500 dark:text-gray-400 hover:border-[#A97E50] hover:text-[#A97E50] hover:bg-[#A97E50]/5 transition-all flex items-center justify-center gap-2 font-semibold"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                  Add Experience
-                </button>
+
+                {/* Add new experience inline form */}
+                <AddExperienceForm
+                  onAdd={async (newExp) => {
+                    const updated = [...experiences, newExp];
+                    setExperiences(updated);
+                    try {
+                      const token = localStorage.getItem('token');
+                      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/portfolio/experiences`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                        body: JSON.stringify({ experiences: updated }),
+                      });
+                      const data = await res.json();
+                      if (data.success) {
+                        setPortfolio(data.data);
+                        setExperiences(
+                          (data.data.experiences || []).map(({ title, company, period, description, order }: any) => ({ title, company, period, description, order: order ?? 0 }))
+                        );
+                        showToast('Experience added successfully', 'success');
+                      } else {
+                        showToast(data.message, 'error');
+                        setExperiences(experiences);
+                      }
+                    } catch {
+                      showToast('Failed to add experience', 'error');
+                      setExperiences(experiences);
+                    }
+                  }}
+                />
               </div>
-              <button
-                onClick={handleUpdateExperiences}
-                className="w-full mt-6 bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white py-3 rounded-lg font-semibold hover:shadow-xl hover:scale-[1.02] transition-all"
-              >
-                Update Experiences
-              </button>
             </div>
           )}
 
