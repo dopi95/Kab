@@ -5,10 +5,7 @@ const PING_INTERVAL = 14 * 60 * 1000; // 14 minutes
 export const startKeepAlive = () => {
   const backendUrl = process.env.BACKEND_URL || process.env.RENDER_EXTERNAL_URL;
   
-  if (!backendUrl) {
-    console.log('No backend URL configured for keep-alive');
-    return;
-  }
+  if (!backendUrl) return;
 
   setInterval(async () => {
     try {
