@@ -28,7 +28,7 @@ export default function PortfolioSection() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`);
       const data = await response.json();
-      setProjects(data);
+      setProjects(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching projects:', error);
     }

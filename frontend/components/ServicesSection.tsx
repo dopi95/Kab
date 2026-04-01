@@ -36,7 +36,7 @@ export default function ServicesSection() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services`);
       const data = await response.json();
-      setServices(data);
+      setServices(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching services:', error);
     } finally {
