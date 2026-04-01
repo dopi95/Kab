@@ -56,7 +56,7 @@ const PortfolioSchema: Schema = new Schema(
       type: [
         {
           title: { type: String, required: true },
-          description: { type: String, required: true },
+          description: { type: String, default: '' },
           type: { type: String, enum: ['image', 'video', 'youtube'], required: true },
           mediaUrls: { type: [String], default: [] },
           youtubeUrl: { type: String },

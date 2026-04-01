@@ -884,11 +884,10 @@ export default function AdminPortfolioPage() {
                   />
                   <textarea
                     name="description"
-                    required
                     defaultValue={editingWork?.work.description}
                     rows={3}
                     className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white"
-                    placeholder="Description"
+                    placeholder="Description (optional)"
                   />
                   <select
                     name="type"
