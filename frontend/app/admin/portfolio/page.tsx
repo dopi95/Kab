@@ -30,7 +30,7 @@ function AddExperienceForm({ onAdd }: { onAdd: (exp: { title: string; company: s
   const [form, setForm] = useState({ title: '', company: '', period: '', description: '', order: 0 });
 
   const handleSubmit = () => {
-    if (!form.title || !form.company || !form.period || !form.description) return;
+    if (!form.title || !form.company || !form.period) return;
     onAdd(form);
     setForm({ title: '', company: '', period: '', description: '', order: 0 });
     setOpen(false);
