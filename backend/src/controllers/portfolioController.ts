@@ -149,6 +149,7 @@ export const updateSampleWork = async (req: Request, res: Response) => {
     }
 
     portfolio.sampleWorks[idx] = { title, description, type, mediaUrls, youtubeUrl };
+    portfolio.markModified('sampleWorks');
     await portfolio.save();
 
     res.json({ success: true, data: portfolio });

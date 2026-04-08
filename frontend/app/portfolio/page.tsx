@@ -401,7 +401,7 @@ export default function PortfolioPage() {
                 ).map((project, idx) => {
                   const getYouTubeId = (url: string) => {
                     if (!url) return '';
-                    const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/);
+                    const match = url.match(/(?:youtube\.com\/(?:shorts\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/);
                     return match ? match[1] : '';
                   };
                   const youtubeId = project.type === 'youtube' && project.youtubeUrl ? getYouTubeId(project.youtubeUrl) : '';
@@ -477,7 +477,7 @@ export default function PortfolioPage() {
         {selectedProject && (() => {
           const getYouTubeId = (url: string) => {
             if (!url) return '';
-            const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/);
+            const match = url.match(/(?:youtube\.com\/(?:shorts\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/);
             return match ? match[1] : '';
           };
           const youtubeId = selectedProject.type === 'youtube' && selectedProject.youtubeUrl ? getYouTubeId(selectedProject.youtubeUrl) : '';

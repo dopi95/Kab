@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminSidebar from '@/components/AdminSidebar';
 
@@ -127,6 +127,7 @@ export default function AdminPortfolioPage() {
   const [deleteType, setDeleteType] = useState<'hero' | 'work'>('hero');
   const [workMediaType, setWorkMediaType] = useState<'image' | 'video' | 'youtube'>('image');
   const [loading, setLoading] = useState(true);
+  const editFormRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -407,6 +408,7 @@ export default function AdminPortfolioPage() {
         showToast('Work updated successfully', 'success');
         setEditingWork(null);
         setEditMediaToRemove([]);
+        setWorkMediaType('image');
       } else {
         showToast(data.message, 'error');
       }
@@ -816,13 +818,13 @@ export default function AdminPortfolioPage() {
               <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6">Sample Works</h2>
               
               {/* Add/Edit Work Form */}
-              <form onSubmit={editingWork ? handleUpdateWork : handleAddWork} className="mb-6 md:mb-8 p-4 md:p-6 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl">
+              <form ref={editFormRef} onSubmit={editingWork ? handleUpdateWork : handleAddWork} className="mb-6 md:mb-8 p-4 md:p-6 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl">
                 <div className="flex items-center justify-between mb-3 md:mb-4">
                   <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">{editingWork ? 'Edit Work' : 'Add New Work'}</h3>
                   {editingWork && (
                     <button
                       type="button"
-                      onClick={() => { setEditingWork(null); setEditMediaToRemove([]); }}
+                      onClick={() => { setEditingWork(null); setEditMediaToRemove([]); setWorkMediaType('image'); }}
                       className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400"
                     >
                       Cancel
@@ -900,7 +902,7 @@ export default function AdminPortfolioPage() {
                     <option value="video">Video</option>
                     <option value="youtube">YouTube</option>
                   </select>
-                  {(editingWork ? editingWork.work.type !== 'youtube' : workMediaType !== 'youtube') && (
+                  {workMediaType !== 'youtube' && (
                     <div>
                       <input
                         type="file"
@@ -913,14 +915,14 @@ export default function AdminPortfolioPage() {
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{editingWork ? 'Leave empty to keep existing media' : 'Select multiple files (images or videos)'}</p>
                     </div>
                   )}
-                  {(editingWork ? editingWork.work.type === 'youtube' : workMediaType === 'youtube') && (
+                  {workMediaType === 'youtube' && (
                     <input
                       type="text"
                       name="youtubeUrl"
                       required
                       defaultValue={editingWork?.work.youtubeUrl}
                       className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#A97E50] focus:border-[#A97E50] dark:bg-gray-700 dark:text-white"
-                      placeholder="YouTube URL"
+                      placeholder="YouTube URL (regular or Shorts)"
                     />
                   )}
                   <button
@@ -937,7 +939,7 @@ export default function AdminPortfolioPage() {
                 {sampleWorks.map((work, idx) => {
                   const getYouTubeId = (url: string) => {
                     if (!url) return '';
-                    const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/);
+                    const match = url.match(/(?:youtube\.com\/(?:shorts\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/);
                     return match ? match[1] : '';
                   };
                   const youtubeId = work.type === 'youtube' ? getYouTubeId(work.youtubeUrl || '') : '';
@@ -979,7 +981,11 @@ export default function AdminPortfolioPage() {
                       <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">{work.description}</p>
                       <div className="flex gap-2">
                         <button
-                          onClick={() => setEditingWork({ index: idx, work })}
+                          onClick={() => {
+                            setEditingWork({ index: idx, work });
+                            setWorkMediaType(work.type);
+                            setTimeout(() => editFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+                          }}
                           className="flex-1 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-2 text-sm"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
