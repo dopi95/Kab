@@ -1,6 +1,7 @@
 import AnimatedHero from '@/components/AnimatedHero';
 import AboutSection from '@/components/AboutSection';
 import ServicesSection from '@/components/ServicesSection';
+import EventPricingSection from '@/components/EventPricingSection';
 import PricingSection from '@/components/PricingSection';
 import FounderSection from '@/components/FounderSection';
 import PortfolioSection from '@/components/PortfolioSection';
@@ -13,6 +14,7 @@ export default function Home() {
       <AnimatedHero />
       <AboutSection />
       <ServicesSection />
+      <EventPricingSection />
       <PricingSection />
       <FounderSection />
       <PortfolioSection />

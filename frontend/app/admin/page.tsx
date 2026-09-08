@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminLayout from '@/components/AdminLayout';
-import { FaUsers, FaCog, FaEnvelope, FaFolderOpen, FaUserPlus, FaPaperPlane, FaChartBar } from 'react-icons/fa';
+import { FaUsers, FaCog, FaEnvelope, FaFolderOpen, FaUserPlus, FaPaperPlane, FaChartBar, FaTags, FaCalendarCheck } from 'react-icons/fa';
 
 interface Stats {
   users: number;
@@ -143,13 +143,33 @@ export default function AdminDashboard() {
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
             <div className="space-y-3">
               <button 
-                onClick={() => router.push('/admin/users')}
+                onClick={() => router.push('/admin/bookings')}
                 className="w-full flex items-center space-x-3 p-4 rounded-lg bg-gradient-to-r from-[#A97E50] to-[#C4A86D] text-white hover:shadow-lg transition-all"
               >
-                <FaUserPlus className="text-2xl" />
+                <FaCalendarCheck className="text-2xl" />
                 <div className="text-left">
-                  <p className="font-semibold">Manage Users</p>
-                  <p className="text-xs opacity-90">Create and manage users</p>
+                  <p className="font-semibold">Package Bookings</p>
+                  <p className="text-xs opacity-90">View submissions & customer details</p>
+                </div>
+              </button>
+              <button 
+                onClick={() => router.push('/admin/pricing-packages')}
+                className="w-full flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-[#A97E50] transition-all"
+              >
+                <FaTags className="text-2xl text-gray-700 dark:text-gray-300" />
+                <div className="text-left">
+                  <p className="font-semibold text-gray-900 dark:text-white">Pricing Packages</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Manage event & social media packages</p>
+                </div>
+              </button>
+              <button 
+                onClick={() => router.push('/admin/users')}
+                className="w-full flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-[#A97E50] transition-all"
+              >
+                <FaUserPlus className="text-2xl text-gray-700 dark:text-gray-300" />
+                <div className="text-left">
+                  <p className="font-semibold text-gray-900 dark:text-white">Manage Users</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Create and manage users</p>
                 </div>
               </button>
               <button 

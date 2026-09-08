@@ -15,6 +15,8 @@ import faqRoutes from './routes/faqRoutes';
 import assetRoutes from './routes/assetRoutes';
 import founderRoutes from './routes/founderRoutes';
 import portfolioRoutes from './routes/portfolioRoutes';
+import pricingPackageRoutes from './routes/pricingPackageRoutes';
+import bookingRoutes from './routes/bookingRoutes';
 import healthRoutes from './routes/healthRoutes';
 import { errorHandler, notFound } from './middleware/errorHandler';
 import { startKeepAlive } from './services/keepAlive';
@@ -50,6 +52,8 @@ app.use('/api/faqs', faqRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/api/founder', founderRoutes);
 app.use('/api/portfolio', portfolioRoutes);
+app.use('/api/pricing-packages', pricingPackageRoutes);
+app.use('/api/bookings', bookingRoutes);
 app.use('/api', healthRoutes);
 
 // Error handling

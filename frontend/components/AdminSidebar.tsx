@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { FaChartLine, FaUser, FaFileAlt, FaCog, FaUsers, FaFolderOpen, FaEnvelope, FaFileInvoice, FaSignOutAlt, FaGlobe, FaQuestionCircle, FaDownload, FaQuoteLeft } from 'react-icons/fa';
+import { FaChartLine, FaUser, FaFileAlt, FaCog, FaUsers, FaFolderOpen, FaEnvelope, FaFileInvoice, FaSignOutAlt, FaGlobe, FaQuestionCircle, FaDownload, FaQuoteLeft, FaTags, FaCalendarCheck } from 'react-icons/fa';
 
 interface SidebarProps {
   user: any;
@@ -24,38 +24,37 @@ export default function AdminSidebar({ user }: SidebarProps) {
       audioRef.current.volume = 0.4;
     }
 
-    const fetchUnreadCount = async () => {
+    const fetchCounts = async () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) return;
         
+        // Fetch contacts unread
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact/unread-count`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         
-        if (!response.ok) return;
-        
-        const data = await response.json();
-        if (data.success) {
-          const newCount = data.count;
-          
-          if (newCount > 0 && !hasPlayedInitialSound.current) {
-            audioRef.current?.play().catch(() => {});
-            hasPlayedInitialSound.current = true;
-          } else if (newCount > previousCountRef.current && previousCountRef.current > 0) {
-            audioRef.current?.play().catch(() => {});
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            const newCount = data.count;
+            if (newCount > 0 && !hasPlayedInitialSound.current) {
+              audioRef.current?.play().catch(() => {});
+              hasPlayedInitialSound.current = true;
+            } else if (newCount > previousCountRef.current && previousCountRef.current > 0) {
+              audioRef.current?.play().catch(() => {});
+            }
+            previousCountRef.current = newCount;
+            setUnreadCount(newCount);
           }
-          
-          previousCountRef.current = newCount;
-          setUnreadCount(newCount);
         }
       } catch (error) {
         // Silently fail
       }
     };
 
-    fetchUnreadCount();
-    const interval = setInterval(fetchUnreadCount, 10000);
+    fetchCounts();
+    const interval = setInterval(fetchCounts, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -66,10 +65,10 @@ export default function AdminSidebar({ user }: SidebarProps) {
 
   const menuItems = [
     { icon: FaChartLine, label: 'Dashboard', path: '/admin' },
+    { icon: FaEnvelope, label: 'Contacts', path: '/admin/contacts', badge: unreadCount },
     { icon: FaUser, label: 'My Profile', path: '/admin/profile' },
     { icon: FaFileAlt, label: 'About', path: '/admin/about' },
     { icon: FaCog, label: 'Services', path: '/admin/services' },
-    { icon: FaEnvelope, label: 'Contacts', path: '/admin/contacts', badge: unreadCount },
     { icon: FaQuestionCircle, label: 'FAQs', path: '/admin/faqs' },
     { icon: FaUsers, label: 'Users', path: '/admin/users' },
     { icon: FaFolderOpen, label: 'Projects', path: '/admin/projects' },

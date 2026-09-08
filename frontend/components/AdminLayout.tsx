@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminSidebar from '@/components/AdminSidebar';
+import NotificationBell from '@/components/NotificationBell';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -53,8 +54,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#171817]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#171817] relative">
       <AdminSidebar user={user} />
+      <NotificationBell />
       <main className="lg:ml-64 min-h-screen">
         {children}
       </main>

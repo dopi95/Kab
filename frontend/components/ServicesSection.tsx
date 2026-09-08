@@ -78,7 +78,7 @@ export default function ServicesSection() {
   }, [isVisible, animationComplete, services.length]);
 
   return (
-    <section id="services" ref={sectionRef} className="min-h-screen py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 relative overflow-hidden">
+    <section id="services" ref={sectionRef} className="pt-14 md:pt-20 pb-6 md:pb-8 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 relative overflow-hidden">
       <div className="absolute top-20 left-10 w-64 h-64 bg-[#A97E50]/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-80 h-80 bg-[#C4A86D]/10 rounded-full blur-3xl"></div>
 
