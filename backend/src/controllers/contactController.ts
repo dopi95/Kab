@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Contact from '../models/Contact';
 import axios from 'axios';
+import { sendTelegramContactNotification } from '../services/telegramService';
 
 export const submitContact = async (req: Request, res: Response) => {
   try {
@@ -19,6 +20,14 @@ export const submitContact = async (req: Request, res: Response) => {
       subject,
       message,
     });
+
+    // Send Telegram alert asynchronously
+    sendTelegramContactNotification({
+      name: contact.name,
+      email: contact.email,
+      subject: contact.subject,
+      message: contact.message,
+    }).catch((err) => console.error('Telegram contact alert error:', err));
 
     res.status(201).json({ 
       success: true, 

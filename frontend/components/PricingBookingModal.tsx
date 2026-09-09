@@ -10,6 +10,7 @@ export interface SelectedPackage {
   price: string;
   badgeColor: string;
   accentBg: string;
+  category?: 'event' | 'social_media';
 }
 
 interface PricingBookingModalProps {
@@ -35,7 +36,11 @@ export default function PricingBookingModal({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const isEvent = selectedPackage ? selectedPackage.id.startsWith('event-') : false;
+  const isEvent = selectedPackage
+    ? selectedPackage.category === 'event' ||
+      selectedPackage.id.startsWith('event-') ||
+      selectedPackage.name.toLowerCase().includes('event')
+    : false;
 
   // Update Ethiopian date when dateStr changes
   useEffect(() => {
@@ -94,28 +99,31 @@ export default function PricingBookingModal({
     setError('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      if (apiUrl) {
-        // Save to dedicated Bookings database collection
-        await fetch(`${apiUrl}/api/bookings`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            packageName: selectedPackage.name,
-            packageCategory: isEvent ? 'event' : 'social_media',
-            packagePrice: selectedPackage.price,
-            packageCurrency: 'ETB',
-            clientName: name || 'Client',
-            phone: phone || '',
-            email: email || '',
-            eventDate: isEvent ? {
-              european: currentGregorianDate ? formatEuropeanDate(currentGregorianDate) : dateStr,
-              ethiopianAmharic: ethiopianDate?.formattedAm || '',
-              ethiopianEnglish: ethiopianDate?.formattedEn || '',
-            } : undefined,
-            notes: `Booked from website modal. Phone: ${phone || 'N/A'}, Email: ${email || 'N/A'}`,
-          }),
-        }).catch(() => {});
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      // Save to dedicated Bookings database collection
+      const res = await fetch(`${apiUrl}/api/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packageName: selectedPackage.name,
+          packageCategory: isEvent ? 'event' : 'social_media',
+          packagePrice: selectedPackage.price,
+          packageCurrency: 'ETB',
+          clientName: name || 'Client',
+          phone: phone || '',
+          email: email || '',
+          eventDate: isEvent ? {
+            european: currentGregorianDate ? formatEuropeanDate(currentGregorianDate) : dateStr,
+            ethiopianAmharic: ethiopianDate?.formattedAm || '',
+            ethiopianEnglish: ethiopianDate?.formattedEn || '',
+          } : undefined,
+          notes: `Booked from website modal. Phone: ${phone || 'N/A'}, Email: ${email || 'N/A'}`,
+        }),
+      });
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        console.error('Booking submission warning:', errJson);
       }
 
       setIsSubmitted(true);

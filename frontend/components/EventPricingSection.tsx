@@ -157,12 +157,16 @@ export default function EventPricingSection() {
       price: pkg.price,
       badgeColor: pkg.accentColor,
       accentBg: `from-[${pkg.accentColor}] to-[#C4A86D]`,
+      category: 'event',
     });
     setModalOpen(true);
   };
 
   return (
-    <section className="relative pt-6 md:pt-10 pb-16 md:pb-24 overflow-hidden bg-gradient-to-b from-white via-[#faf7f2] to-white border-b border-[#ebdccb]">
+    <section id="pricing" className="relative pt-6 md:pt-10 pb-16 md:pb-24 overflow-hidden bg-gradient-to-b from-white via-[#faf7f2] to-white border-b border-[#ebdccb] scroll-mt-20">
+      {/* Anchor for packages navigation */}
+      <div id="packages" className="absolute -top-20" />
+
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-[#C4A86D]/10 rounded-full blur-3xl" />

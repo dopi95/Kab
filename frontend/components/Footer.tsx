@@ -61,6 +61,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/#pricing" className="text-gray-400 hover:text-[#C4A86D] transition-colors duration-300 flex items-center gap-2 group">
+                  <span className="w-0 group-hover:w-2 h-0.5 bg-[#C4A86D] transition-all duration-300"></span>
+                  Pricing
+                </Link>
+              </li>
+              <li>
                 <Link href="/#portfolio" className="text-gray-400 hover:text-[#C4A86D] transition-colors duration-300 flex items-center gap-2 group">
                   <span className="w-0 group-hover:w-2 h-0.5 bg-[#C4A86D] transition-all duration-300"></span>
                   Portfolio

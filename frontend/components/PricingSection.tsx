@@ -150,6 +150,7 @@ export default function PricingSection() {
       price: pkg.price,
       badgeColor: pkg.accentColor,
       accentBg: `from-[${pkg.accentColor}] to-[#C4A86D]`,
+      category: 'social_media',
     });
     setModalOpen(true);
   };
